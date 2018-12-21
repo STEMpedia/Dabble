@@ -1,0 +1,40 @@
+ 
+#ifdef INCLUDE_INTERNET_MODULE
+EXTERN InternetModule Internet;
+#endif
+
+#ifdef INCLUDE_TERMINAL_MODULE
+EXTERN TerminalModule Terminal;
+#endif
+
+#ifdef INCLUDE_DABBLEINPUTS_MODULE
+EXTERN DabbleInputs Inputs;
+#endif
+
+#ifdef INCLUDE_MOTORCONTROL_MODULE
+EXTERN motorControls motorControl;
+#endif
+
+#ifdef INCLUDE_GAMEPAD_MODULE
+EXTERN GamePadModule GamePad;
+#endif
+
+#ifdef INCLUDE_PINMONITOR_MODULE
+EXTERN PinMonitorModule PinMonitor;
+#endif
+
+#ifdef INCLUDE_OSCILLOSCOPE_MODULE
+EXTERN OscilloscopeModule Oscilloscope;
+#endif
+
+#ifdef INCLUDE_SENSOR_MODULE
+EXTERN SensorModule Sensor;
+#endif
+
+#ifdef INCLUDE_CAMERA_MODULE
+EXTERN CameraModule Camera;
+#endif
+
+#ifdef INCLUDE_LEDCONTROL_MODULE
+EXTERN LedControlModule LedControl;
+#endif
