@@ -3,6 +3,8 @@
  * It includes modulewise sublibraries as per modules present in 
  * Dabble app.
  * Version 1.0.0
+ * 
+ * This library structure is derived from OneSheeld Library.
  *
  * This is licensed under GNU GPL V3 [http://www.gnu.org/licenses/gpl.txt].
  * Written by Dhrupal R Shah for evive platform, Agilo Research Pvt. Ltd.
@@ -66,14 +68,13 @@
 //Library Version
 #define LIBRARY_VERSION 1
 //Time between sending Frames
-#define TIME_GAP		0UL
+#define TIME_GAP		10UL
 
 //Selecting picture from folder
 #define FROM_DABBLE_FOLDER 0x00
 #define FROM_CAMERA_FOLDER	  0x01
 
 
-//#define DEBUG
 //#define DEBUG
 
 //Output function ID's
