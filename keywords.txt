@@ -1,0 +1,109 @@
+#######################################
+# Syntax Coloring Map For Dabble
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+Dabble	KEYWORD1
+LedControl	KEYWORD1
+GamePad	KEYWORD1
+Inputs	KEYWORD1
+Oscilloscope	KEYWORD1
+Terminal	KEYWORD1
+PinMonitor	KEYWORD1
+Internet	KEYWORD1
+Sensor	KEYWORD1
+IOT	KEYWORD1
+Camera	KEYWORD1
+#######################################
+# Functions (KEYWORD2)
+#######################################
+readBrightness	KEYWORD2
+getpinState	KEYWORD2	
+getpinNumber	KEYWORD2
+getx_axis	KEYWORD2	
+gety_axis	KEYWORD2	
+getAngle	KEYWORD2	
+getRadius	KEYWORD2	
+isStartPressed	KEYWORD2	
+isSelectPressed	KEYWORD2	
+isCirclePressed	KEYWORD2	
+isCrossPressed	KEYWORD2	
+isSquarePressed	KEYWORD2	
+isTrianglePressed	KEYWORD2	
+isLeftPressed	KEYWORD2	
+isRightPressed	KEYWORD2	
+isUpPressed	KEYWORD2	
+isDownPressed	KEYWORD2	
+defineServopins	KEYWORD2	
+motorControls	KEYWORD2	
+getpwm_Motor1	KEYWORD2	
+getpwm_Motor2	KEYWORD2	
+runMotor1	KEYWORD2	
+runMotor2	KEYWORD2	
+sendpinsStatus	KEYWORD2	
+sendanalogData	KEYWORD2	
+sendDigitalData	KEYWORD2	
+sendAnalogData	KEYWORD2	
+getvalue_Pot1	KEYWORD2	
+getvalue_Pot2	KEYWORD2	
+getStatus_SlideSwitch1	KEYWORD2	
+getStatus_SlideSwitch2	KEYWORD2	
+getStatus_TactileSwitch1	KEYWORD2	
+getStatus_TactileSwitch2	KEYWORD2	
+getdata_Accelerometer_xaxis	KEYWORD2	
+getdata_Accelerometer_yaxis	KEYWORD2	
+getdata_Accelerometer_zaxis	KEYWORD2	
+getdata_Gyroscope_xaxis	KEYWORD2	
+getdata_Gyroscope_yaxis	KEYWORD2	
+getdata_Gyroscope_zaxis	KEYWORD2	
+getdata_Magnetometer_xaxis	KEYWORD2	
+getdata_Magnetometer_yaxis	KEYWORD2	
+getdata_Magnetometer_zaxis	KEYWORD2	
+getdata_Proximity	KEYWORD2	
+getdata_Light	KEYWORD2	
+getdata_Sound	KEYWORD2	
+getdata_Temperature	KEYWORD2	
+getdata_Barometer	KEYWORD2	
+getdata_GPS_longitude	KEYWORD2	
+getdata_GPS_latitude	KEYWORD2	
+getangle_Servo1	KEYWORD2	
+getangle_Servo2	KEYWORD2	
+send_channel_data	KEYWORD2		
+setParameters	KEYWORD2	
+captureImage	KEYWORD2	
+startRecording	KEYWORD2	
+stopRecording	KEYWORD2
+flashMode	KEYWORD2
+setQuality	KEYWORD2
+zoom	KEYWORD2
+flipTo	KEYWORD2	
+
+#######################################
+# Constants And Literals (LITERAL1)
+#######################################
+Rear	LITERAL1
+Front	LITERAL1
+High	LITERAL1
+Low	LITERAL1
+Auto	LITERAL1
+Off	LITERAL1
+On	LITERAL1
+FROM_DABBLE_FOLDER	LITERAL1	
+INCLUDE_INTERNET_MODULE	LITERAL1	
+INCLUDE_OSCILLOSCOPE_MODULE	LITERAL1	
+INCLUDE_MOTORCONTROL_MODULE	LITERAL1	
+INCLUDE_PINMONITOR_MODULE	LITERAL1	
+INCLUDE_DABBLEINPUTS_MODULE	LITERAL1	
+INCLUDE_GAMEPAD_MODULE	LITERAL1	
+INCLUDE_IOT_MODULE	LITERAL1	
+INCLUDE_SENSOR_MODULE	LITERAL1	
+INCLUDE_TERMINAL_MODULE	LITERAL1	
+INCLUDE_CAMERA_MODULE	LITERAL1	
+INCLUDE_LEDCONTROL_MODULE	LITERAL1	
+CUSTOM_SETTINGS	LITERAL1	
+               
+
+
+
