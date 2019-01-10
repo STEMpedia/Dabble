@@ -4,29 +4,49 @@
 
 CameraModule::CameraModule(): ModuleParent(CAMERA_ID)
 {
+	 
+}
+void CameraModule::setParameters(uint8_t rotateTo,uint8_t flashmode, uint8_t quality,uint8_t zoomvalue)
+{
 	
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&rotateTo));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&flashmode));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&quality));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x05,1,new FunctionArg(1,&zoomvalue));
 }
-
-void CameraModule::CaptureImage()
+void CameraModule::captureImage()
 {
-	 Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,imageCapture));
+   Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&captureimage));
 }
 
-void CameraModule::CameraFlip()
+void CameraModule::startRecording()
 {
-	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,FlipCamera));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&startVideo));
 }
 
-void CameraModule::CaptureVideo()
+void CameraModule::stopRecording()
 {
-	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,videoCapture));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&stopVideo));
 }
 
-void CameraModule::FlashToggle()
+void CameraModule::flashMode(uint8_t a)
 {
-	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,ToggleFlash));
+	 Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&a));
 }
 
-/* void CameraModule::processData(){
-	
-} */
+void CameraModule::setQuality(uint8_t a)
+{
+	 Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&a));
+}
+
+void CameraModule::zoom(uint8_t a)
+{
+	 Dabble.sendModuleFrame(CAMERA_ID,0,0x05,1,new FunctionArg(1,&a));
+}
+
+void CameraModule::flipTo(uint8_t direction)
+{
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&direction));
+}
+
+
