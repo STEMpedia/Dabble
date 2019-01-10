@@ -1,8 +1,13 @@
 /*
    Terminal Module is like a chat box. It allows you to send and receive commands between your
    board and smartphone.
+
+   You can reduce the size of library compiled by enabling only those modules that you
+   want to use. For this first define CUSTOM_SETTINGS followed by defining
+   INCLUDE_modulename.
+
    Explore more on: https://thestempedia.com/docs/dabble/terminal-module/
- */
+*/
 #define CUSTOM_SETTINGS
 #define INCLUDE_TERMINAL_MODULE
 #include <evive.h>

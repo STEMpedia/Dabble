@@ -1,31 +1,39 @@
 /*
-   Pin State Monitor is made for monitoring status of analog and digital pins of your board.
-   In this example bluetooth is to be connected on HardwareSerial0 for Uno and Nano Boards.
+   Magnetometer block helps in accessing your mobile's magnetometer.
 
    You can reduce the size of library compiled by enabling only those modules that you want
    to use. For this first define CUSTOM_SETTINGS followed by defining INCLUDE_modulename.
 
-   Explore more on: https://thestempedia.com/docs/dabble/pin-state-monitor-module/
+   Explore more on: https://thestempedia.com/docs/dabble/phone-sensors-module/
 */
-
 #define CUSTOM_SETTINGS
-#define INCLUDE_PINMONITOR_MODULE
+#define INCLUDE_SENSOR_MODULE
 #include <evive.h>
 #include <Dabble.h>
 
 
 void setup() {
-  /*
-     NOTE: PinMonitor only displays status of the pins of your board. It does not configure pinMode of the pins.
-     So if there is any necessity to define pinMode then declare it setup as per requirement.
-  */
   Serial.begin(250000);
   Dabble.begin(115200);    //Enter baudrate of your bluetooth.Connect bluetooth on Bluetooth port present on evive.
 }
 
 void loop() {
   Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
-  PinMonitor.sendDigitalData();
-  PinMonitor.sendAnalogData();
-  delayMicroseconds(20);
+  print_Magnetometer_data();
 }
+
+void print_Magnetometer_data()
+{
+  Serial.print("X-axis: ");
+  Serial.print(Sensor.getdata_Magnetometer_xaxis(), 7);
+  Serial.print('\t');
+  Serial.print("Y-axis: ");
+  Serial.print(Sensor.getdata_Magnetometer_yaxis(), 7);
+  Serial.print('\t');
+  Serial.print("Z-axis: ");
+  Serial.println(Sensor.getdata_Magnetometer_zaxis(), 7);
+  Serial.println();
+}
+
+
+

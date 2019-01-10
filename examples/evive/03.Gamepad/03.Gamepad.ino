@@ -1,7 +1,11 @@
 /*
    Gamepad module provides three different mode namely Digital, JoyStick and Accerleometer.
+
+   You can reduce the size of library compiled by enabling only those modules that you want to
+   use. For this first define CUSTOM_SETTINGS followed by defining INCLUDE_modulename.
+
    Explore more on: https://thestempedia.com/docs/dabble/game-pad-module/
- */
+*/
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
 #include <evive.h>
@@ -9,7 +13,7 @@
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(250000);
-  Dabble.begin(115200);      
+  Dabble.begin(115200);
 }
 
 void loop() {
