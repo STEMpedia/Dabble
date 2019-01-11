@@ -27,7 +27,7 @@ void loop() {
   }
 
 
-  if (digitalRead(TACTILESW2) == 1)
+  if (digitalRead(TACTILESW2) == HIGH)
   {
     Camera.flipTo(Rear);   //Since here only direction of camera changed hence all other parameters like Flash mode, Quality and zoom remains same as per previous declarations or default
     Camera.zoom(50);       //Take a 50% zoomed image
