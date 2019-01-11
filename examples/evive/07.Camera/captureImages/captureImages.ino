@@ -18,11 +18,12 @@ void setup() {
 
 void loop() {
   Dabble.processInput();
-  if (digitalRead(TACTILESW1) == 1)
+  if (digitalRead(TACTILESW1) == HIGH)
   {
     Camera.setParameters(Front, Off, High, 0);   //Direction of camera, Flash Mode, Quality, zoom
     Camera.captureImage();
     while (digitalRead(TACTILESW1) == HIGH);     //to prevent execution of task multiple times for single press on Tactile switch.
+    delay(100);                                  //debounce delay
   }
 
 
@@ -32,6 +33,7 @@ void loop() {
     Camera.zoom(50);       //Take a 50% zoomed image
     Camera.captureImage();
     while (digitalRead(TACTILESW2) == HIGH); //to prevent execution of task multiple times for single press on Tactile switch.
+    delay(100);                              //debounce delay
   }
 }
 
