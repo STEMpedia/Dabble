@@ -35,7 +35,7 @@ void loop() {
   char a = processSerialdata();
   if( a == '1')
   {
-    Camera.setParameters(Front,Off,High,0);
+    Camera.setParameters(Front,Off,High,0);   //Camera Direction, Flash, quality, Zoom(from 0 to 100%)
     Camera.captureImage();
   }
   if( a == '2')
