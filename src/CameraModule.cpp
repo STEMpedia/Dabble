@@ -12,7 +12,7 @@ void CameraModule::setParameters(uint8_t rotateTo,uint8_t flashmode, uint8_t qua
 	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&rotateTo));
 	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&flashmode));
 	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&quality));
-	Dabble.sendModuleFrame(CAMERA_ID,0,0x05,1,new FunctionArg(1,&zoomvalue));
+	Dabble.sendModuleFrame(CAMERA_ID,0,0x02,1,new FunctionArg(1,&zoomvalue));
 }
 void CameraModule::captureImage()
 {
@@ -41,7 +41,7 @@ void CameraModule::setQuality(uint8_t a)
 
 void CameraModule::zoom(uint8_t a)
 {
-	 Dabble.sendModuleFrame(CAMERA_ID,0,0x05,1,new FunctionArg(1,&a));
+	 Dabble.sendModuleFrame(CAMERA_ID,0,0x02,1,new FunctionArg(1,&a));
 }
 
 void CameraModule::flipTo(uint8_t direction)
