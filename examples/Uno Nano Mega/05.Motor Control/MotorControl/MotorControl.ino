@@ -37,7 +37,7 @@ uint8_t servo1_pin = 10;
 uint8_t servo2_pin = 11;
 
 void setup() {
-  Serial.begin(250000);
+  Serial.begin(9600);     // make sure your Serial Monitor is also set at this baud rate.
   Dabble.begin(9600);     //Change this baudrate as per your bluetooth baudrate. Connect bluetooth on digital pin 2(RX) and 3(TX) for Uno/Nano and on Serial3 pins for Mega.
   servo1.attach(servo1_pin);
   servo2.attach(servo2_pin);

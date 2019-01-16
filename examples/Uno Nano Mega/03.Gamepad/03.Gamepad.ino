@@ -21,7 +21,7 @@
 #include <Dabble.h>
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(250000);
+  Serial.begin(9600);  // make sure your Serial Monitor is also set at this baud rate.
   Dabble.begin(9600);  //Change this baudrate as per your bluetooth baudrate. Connect bluetooth on digital pin 2(RX) and 3(TX) for Uno/Nano and on Serial3 pins for Mega.
 }
 

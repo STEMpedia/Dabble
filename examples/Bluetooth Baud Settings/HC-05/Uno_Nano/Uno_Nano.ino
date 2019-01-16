@@ -17,6 +17,9 @@
  * 4. You will see that LED on bluetooth module blinks one time in every 2 seconds approx.
  * 5. If you see this kind of blink you have successfully entered AT mode. If the blink is not as mentioned in step 3 
  *   then unplug bluetooth and follow procedure again.
+ *   
+ *   Once you have completed this procedure and you have set baudrate as per your requirement then 
+ *   disconnect bluetooth and reconnect it without pressing the push button to set bluetooth in pairing mode.
  */
 
 #include <SoftwareSerial.h>
@@ -25,8 +28,8 @@ bool   response = 0;
 String response_data = "";
 String send_data="";
 void setup() {
-  Serial.begin(250000);
-  mySerial.begin(38400);   
+  Serial.begin(9600);        // make sure your Serial Monitor is also set at this baud rate.
+  mySerial.begin(38400);     //Baud rate at which HC-05 works in AT mode.
   checkATresponse();
   // put your setup code here, to run once:
 }
