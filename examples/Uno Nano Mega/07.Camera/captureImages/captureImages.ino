@@ -52,8 +52,6 @@ void loop() {
     Camera.zoom(50);
     Camera.captureImage();
   }
- 
-
 }
 
 void printMessage()
