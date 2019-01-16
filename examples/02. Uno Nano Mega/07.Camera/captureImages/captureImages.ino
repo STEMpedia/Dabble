@@ -76,4 +76,3 @@ char processSerialdata()
     return '0';
   }
 }
-
