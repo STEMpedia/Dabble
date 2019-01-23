@@ -662,10 +662,10 @@ void DabbleClass::processFrame(){
     else if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
-      uint8_t BoardId_Mega[4] = {0x02,0,0,1};
-	  uint8_t BoardId_Uno[4] =  {0x03,0,0,1};
-	  uint8_t BoardId_Nano[4] = {0x04,0,0,1};
-	  uint8_t BoardId_Other[4] = {0x05,0,0,1};
+      uint8_t BoardId_Mega[4] = {0x02,1,0,0};
+	  uint8_t BoardId_Uno[4] =  {0x03,1,0,0};
+	  uint8_t BoardId_Nano[4] = {0x04,1,0,0};
+	  uint8_t BoardId_Other[4] = {0x05,1,0,0};
 	  #if ((defined(ARDUINO_AVR_MEGA2560)) || (defined(ARDUINO_AVR_MEGA)))
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Mega));
       #elif(defined(ARDUINO_AVR_NANO))
