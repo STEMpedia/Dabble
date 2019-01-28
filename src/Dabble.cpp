@@ -538,7 +538,7 @@ void DabbleClass::processInput(int data) {
                   if(Module == Dabble_ID || isModuleFrameCallback) found = true;
                   else 
 				  {
-					Serial.print(ModulesCounter);  
+					//Serial.print(ModulesCounter);  
                   for (int i=0;i<ModulesCounter;i++) {
                     if (Module == ModulesArray[i]->getModuleId()){
                       found = true;
