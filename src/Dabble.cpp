@@ -537,12 +537,11 @@ void DabbleClass::processInput(int data) {
                   bool found = false;
                   if(Module == Dabble_ID || isModuleFrameCallback) found = true;
                   else 
-				  {
-					Serial.print(ModulesCounter);  
+				  { 
                   for (int i=0;i<ModulesCounter;i++) {
                     if (Module == ModulesArray[i]->getModuleId()){
                       found = true;
-                      #ifdef DEBUG
+                        #ifdef DEBUG
 						 Serial.print("Module: ");
 						 Serial.print(Module, HEX);
 						 Serial.print(" ");
@@ -584,21 +583,25 @@ void DabbleClass::processInput()
 	}*/
 	if(DabbleSerial->available())
 	{
-  while(DabbleSerial->available())
-   {
-    byte data=DabbleSerial->read();
-	/*Serial.print(data);
-	Serial.print(" ");*/
-	processInput(data);
-    if(isSerialDataCallback)
-    {
+      while(DabbleSerial->available())
+     {
+      byte data=DabbleSerial->read();
+	  /*#ifdef DEBUG
+	  Serial.print(data);
+	  Serial.print(" ");
+      #endif*/	 
+	 processInput(data);
+     if(isSerialDataCallback)
+     {
       enteringACallback();
       serialDataCallback(data);
       exitingACallback();
-    }   
+     }  
    }
-  // Serial.println();
-	}
+   /*#ifdef DEBUG
+   Serial.println();
+   #endif*/
+  }
 }
 
 void DabbleClass::freeMemoryAllocated(){
@@ -662,10 +665,10 @@ void DabbleClass::processFrame(){
     else if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
-      uint8_t BoardId_Mega[4] = {0x02,0,0,1};
-	  uint8_t BoardId_Uno[4] =  {0x03,0,0,1};
-	  uint8_t BoardId_Nano[4] = {0x04,0,0,1};
-	  uint8_t BoardId_Other[4] = {0x05,0,0,1};
+      uint8_t BoardId_Mega[4] = {0x02,1,1,0};
+	  uint8_t BoardId_Uno[4] =  {0x03,1,1,0};
+	  uint8_t BoardId_Nano[4] = {0x04,1,1,0};
+	  uint8_t BoardId_Other[4] = {0x05,1,1,0};
 	  #if ((defined(ARDUINO_AVR_MEGA2560)) || (defined(ARDUINO_AVR_MEGA)))
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Mega));
       #elif(defined(ARDUINO_AVR_NANO))

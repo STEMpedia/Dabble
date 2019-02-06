@@ -38,3 +38,7 @@ EXTERN CameraModule Camera;
 #ifdef INCLUDE_LEDCONTROL_MODULE
 EXTERN LedControlModule LedControl;
 #endif
+
+#ifdef INCLUDE_COLORDETECTOR_MODULE
+EXTERN ColorDetectorModule ColorDetector;
+#endif

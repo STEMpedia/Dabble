@@ -7,7 +7,7 @@
  * This library structure is derived from OneSheeld Library.
  *
  * This is licensed under GNU GPL V3 [http://www.gnu.org/licenses/gpl.txt].
- * Written by Dhrupal R Shah for evive platform, Agilo Research Pvt. Ltd.
+ * Written by Dhrupal R Shah for evive platform, Agilo Research Pvt. Ltd
  * Created on: December 14, 2018
  * Updated on: 20181214
  * Contact: support@evive.cc
@@ -65,15 +65,8 @@
 //Start and End of packet sent
 #define START_OF_FRAME  0xFF
 #define END_OF_FRAME 	0x00
-//Library Version
-#define LIBRARY_VERSION 1
 //Time between sending Frames
 #define TIME_GAP		10UL
-
-//Selecting picture from folder
-#define FROM_DABBLE_FOLDER 0x00
-#define FROM_CAMERA_FOLDER	  0x01
-
 
 //#define DEBUG
 
@@ -95,8 +88,7 @@
 
 
 //Number of Module
-#define MODULE_NO	10
-
+#define MODULE_NO	12
 //Class for Datalength and Data
 class FunctionArg
 {

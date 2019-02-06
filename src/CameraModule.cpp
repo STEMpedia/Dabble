@@ -49,4 +49,3 @@ void CameraModule::flipTo(uint8_t direction)
 	Dabble.sendModuleFrame(CAMERA_ID,0,0x01,1,new FunctionArg(1,&direction));
 }
 
-

@@ -9,5 +9,6 @@
 #define SENSORS_ID           0x04
 #define CAMERA_ID            0x06
 #define LEDCONTROL_ID        0x0A
+#define COLORDETECTOR_ID     0x0B
 
 

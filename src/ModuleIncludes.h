@@ -8,4 +8,5 @@
  #include "SensorModule.h"
  #include "CameraModule.h"
  #include "LedControlModule.h"
+ #include "ColorDetectorModule.h"
  
