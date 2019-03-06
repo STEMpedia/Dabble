@@ -1,7 +1,7 @@
 #ifndef OscilloscopeModule_h
 #define OscilloscopeModule_h
 #include "ModuleParent.h"
-#include "Ade7912_Adc.h"
+//#include "Ade7912_Adc.h"
 
 
 #include <SPI.h>
