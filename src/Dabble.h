@@ -71,8 +71,10 @@
 //#define DEBUG
 
 //Output function ID's
-#define SEND_LIBRARY_VERSION	0x01
-#define CHECK_APP_CONNECTION	0x02
+#define CHECK_CONNECTION		0x01
+#define BOARDID_REQUEST			0x03
+//#define SEND_LIBRARY_VERSION	0x01
+//#define CHECK_APP_CONNECTION	0x02
 #define CALLBACK_ENTERED		0x03
 #define CALLBACK_EXITED			0x04
 #define LIBRARY_TESTING_RESPONSE	0x05
@@ -82,14 +84,18 @@
 #define DISCONNECTION_CHECK_FUNCTION 0x02
 
 
-#define BOARDID_REQUEST	0x03
+
 //#define LIBRARY_VERSION_REQUEST	0x03
 //#define LIBRARY_TESTING_REQUEST	0x05
 
 
 //Number of Module
-#define MODULE_NO	12
+#define MODULE_NO	13
 //Class for Datalength and Data
+
+extern bool callBackForDataLogger;
+extern void (*dataLoggerCallBack)(void); 
+
 class FunctionArg
 {
 private:

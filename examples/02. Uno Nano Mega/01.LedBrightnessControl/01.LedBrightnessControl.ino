@@ -34,7 +34,7 @@ void loop() {
   Serial.print("Led:");
   Serial.print(LedControl.getpinNumber());
   Serial.print('\t');
-  Serial.print("State:");          //0 suggests Led
+  Serial.print("State:");          //0 means OFF, 1 means ON
   Serial.print(LedControl.getpinState());
   Serial.print('\t');
   Serial.print("Brightness:");

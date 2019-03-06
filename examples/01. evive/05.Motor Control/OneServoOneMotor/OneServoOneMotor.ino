@@ -23,6 +23,6 @@ void setup() {
 
 void loop() {
   Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.              //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
-  Control.runMotor1(Control.getpwm_Motor1());         //Connect motor to motor channel M1 on evive.
-  servo.write(Control.getangle_Servo2());             //Connect servo to servo channel S2 on evive.
+  Control.runMotor();		         //Connect motor to motor channel M1 on evive.
+  servo.write();             //Connect servo to servo channel S2 on evive.
 }

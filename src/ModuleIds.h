@@ -10,5 +10,6 @@
 #define CAMERA_ID            0x06
 #define LEDCONTROL_ID        0x0A
 #define COLORDETECTOR_ID     0x0B
+#define DATALOGGER_ID		 0x0C	
 
 

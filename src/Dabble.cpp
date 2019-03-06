@@ -9,6 +9,10 @@
 #if(defined(__AVR_ATmega328P__))
 SoftwareSerial DabbleSoftSerial;    //
 #endif
+
+bool callBackForDataLogger = false;
+void (*dataLoggerCallBack)(void); 
+
  
 bool DabbleClass::isInit=false;
 bool DabbleClass::isSws=false;
@@ -103,7 +107,7 @@ void DabbleClass::waitForAppConnection()
 void DabbleClass::init()
 {
   isInit=true;
-  sendModuleFrame(Dabble_ID,0,CHECK_APP_CONNECTION,0);
+  sendModuleFrame(Dabble_ID,0,CHECK_CONNECTION,0);
   if(requestsArray!=0){
     for(int i=0;i<requestsCounter;i++)
       requestsArray[i]->sendInitFrame();
@@ -586,10 +590,10 @@ void DabbleClass::processInput()
       while(DabbleSerial->available())
      {
       byte data=DabbleSerial->read();
-	  /*#ifdef DEBUG
+	  #ifdef DEBUG
 	  Serial.print(data);
 	  Serial.print(" ");
-      #endif*/	 
+      #endif	 
 	 processInput(data);
      if(isSerialDataCallback)
      {
@@ -652,17 +656,7 @@ void DabbleClass::processFrame(){
   readModuleID = getArgumentData(0)[0];
   screenId = getArgumentData(0)[1];
   //Check  the function ID 
-  if(functionId == DISCONNECTION_CHECK_FUNCTION)
-  {
-      isDabbleConnected=false;
-      if(isAppConnectionCallBack)(*isAppConnectedCallBack)(isDabbleConnected);
-  }
-  else if(functionId == CONNECTION_CHECK_FUNCTION)
-  {
-      isDabbleConnected=true;
-      if(isAppConnectionCallBack)(*isAppConnectedCallBack)(isDabbleConnected);
-  }
-    else if(functionId == BOARDID_REQUEST)
+  if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
       uint8_t BoardId_Mega[4] = {0x02,1,1,0};
@@ -686,6 +680,11 @@ void DabbleClass::processFrame(){
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Other));
       #endif*/
  }
+  if(callBackForDataLogger == true)
+  {
+	  callBackForDataLogger = false;
+	 (*dataLoggerCallBack)(); 
+  }
   /*else if(functionId == LIBRARY_VERSION_REQUEST)
   {
     sendModuleFrame(Dabble_ID,0,SEND_LIBRARY_VERSION,0);

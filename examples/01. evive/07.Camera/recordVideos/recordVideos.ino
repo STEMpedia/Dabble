@@ -21,7 +21,7 @@ void loop() {
   
   if (digitalRead(SLIDESW1_D1) == HIGH)
   {
-    Camera.setParameters(Rear, Off, Low, 0);    //A low quality video capture from rear camera with Off flash
+    Camera.setParameters(REAR, OFF, LOW_QUALITY, 0);    //A low quality video capture from rear camera with Off flash
     Camera.startRecording();
     while (digitalRead(SLIDESW1_D1) == HIGH);  //to keep on video recording till the Slideswitch1 is in D1(UP) direction
     Camera.stopRecording();
@@ -30,8 +30,8 @@ void loop() {
   
   if (digitalRead(SLIDESW1_D2) == HIGH)
   {
-    Camera.flipTo(Front);              //To capture high quality video from front camera of your smartphone.
-    Camera.setQuality(High);
+    Camera.flipTo(FRONT);              //To capture high quality video from front camera of your smartphone.
+    Camera.setQuality(HIGH);
     Camera.startRecording();
     while (digitalRead(SLIDESW1_D2) == HIGH); //to keep on video recording till the Slideswitch1 is in D2(Down) direction
     Camera.stopRecording();
@@ -40,8 +40,8 @@ void loop() {
   
   if (digitalRead(SLIDESW2_D1) == HIGH)
   {
-    Camera.flipTo(Rear);                   //Capture a video with auto flash mode from rear camera
-    Camera.flashMode(Auto);
+    Camera.flipTo(REAR);                   //Capture a video with auto flash mode from rear camera
+    Camera.flashMode(AUTO);
     Camera.startRecording();
     while (digitalRead(SLIDESW2_D1) == HIGH); //to keep on video recording till the Slideswitch2 is in D1(UP) direction
     Camera.stopRecording();
@@ -51,8 +51,8 @@ void loop() {
   if (digitalRead(SLIDESW2_D2) == HIGH)
   {
     Camera.zoom(50);                       //Capture a 50% zoomed high quality video from rear camera
-    Camera.flipTo(Rear);
-    Camera.setQuality(High);
+    Camera.flipTo(REAR);
+    Camera.setQuality(HIGH_QUALITY);
     Camera.startRecording();
     while (digitalRead(SLIDESW2_D2) == HIGH); //to keep on video recording till the Slideswitch2 is in D2(Down) direction
     Camera.stopRecording();

@@ -1,4 +1,4 @@
-Serial.begin(9600);     // make sure your Serial Monitor is also set at this baud rate./*
+/*
    Sound sensor gives decibal value of sound that is sensed by your mobile's microphone.
    NOTE:
    1)For Arduino Mega Connect Bluetooth on Serial3 pins.

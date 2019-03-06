@@ -9,4 +9,5 @@
  #include "CameraModule.h"
  #include "LedControlModule.h"
  #include "ColorDetectorModule.h"
+ #include "DataLoggerModule.h"
  

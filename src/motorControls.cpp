@@ -13,7 +13,7 @@ motorControls::motorControls() : ModuleParent(CONTROLS_ID)
 {
 	byte1=0;
 	byte2=0;
-	#if(defined(__AVR_ATmega2560__))
+	#if(defined(__AVR_ATmega2560__))   //default pins of evive
 	pwm_1 = MOTOR1_EN;
 	pwm_2 = MOTOR2_EN;
     dir1_m1 = MOTOR1_D1;
@@ -21,7 +21,6 @@ motorControls::motorControls() : ModuleParent(CONTROLS_ID)
     dir1_m2 = MOTOR2_D1;
     dir2_m2 = MOTOR2_D2;	
     #endif
-	//Serial.println("default");
 }
 
 motorControls::motorControls(uint8_t pwm1, uint8_t dirm1_1, uint8_t dirm1_2) : ModuleParent(CONTROLS_ID)
@@ -63,7 +62,7 @@ uint8_t motorControls::getangle_Servo2()
 	return angle_servo2;
 }
 
-int motorControls::getpwm_Motor1()
+/*int motorControls::getpwm_Motor1()
 {
 	return pwm_Motor1;
 }
@@ -71,78 +70,10 @@ int motorControls::getpwm_Motor1()
 int motorControls::getpwm_Motor2()
 {
 	return pwm_Motor2;
-}
-
-/*void motorControls::moveMotorClockwise(bool a)
-{
-if(a == 0 )
-{
-	pinMode(pwm_1,OUTPUT);
-	pinMode(dir1_m1,OUTPUT);
-	pinMode(dir2_m1,OUTPUT);
-	analogWrite(pwm_1,byte2);
-	digitalWrite(dir1_m1, 1);
-    digitalWrite(dir2_m1, 0);
-}
-else if (a==1)
-{
-	pinMode(pwm_2,OUTPUT);
-	pinMode(dir1_m2,OUTPUT);
-    pinMode(dir2_m2,OUTPUT);
-	analogWrite(pwm_2,byte2);
-	digitalWrite(dir1_m2, 1);
-    digitalWrite(dir2_m2, 0);
-}
-
-}
-
-void motorControls::moveMotorAntiClockwise(bool b)
-{
- if(b == 0 )
- {
-	pinMode(pwm_1,OUTPUT);
-	pinMode(dir1_m1,OUTPUT);
-	pinMode(dir2_m1,OUTPUT);
-	analogWrite(pwm_1,byte2);
-	digitalWrite(dir1_m1, 0);
-    digitalWrite(dir2_m1, 1);
- }
- else if (b==1)
- {
-	pinMode(pwm_2,OUTPUT);
-	pinMode(dir1_m2,OUTPUT);
-    pinMode(dir2_m2,OUTPUT);
-	analogWrite(pwm_2,byte2);
-	digitalWrite(dir1_m2, 0);
-    digitalWrite(dir2_m2, 1);
- }
-}
-
-void motorControls::stopMotor(bool d)
-{
- if(d == 0 )
- {
-	pinMode(pwm_1,OUTPUT);
-	pinMode(dir1_m1,OUTPUT);
-	pinMode(dir2_m1,OUTPUT);
-	analogWrite(pwm_1,0);
-	digitalWrite(dir1_m1, 0);
-    digitalWrite(dir2_m1, 0);
- }
- else if (d == 1)
- {
-	pinMode(pwm_2,OUTPUT);
-	pinMode(dir1_m2,OUTPUT);
-    pinMode(dir2_m2,OUTPUT);
-	analogWrite(pwm_2,byte2);
-	digitalWrite(dir1_m2, 0);
-    digitalWrite(dir2_m2, 0);
- }
 }*/
 
 void motorControls::processData()
 {
-	    Serial.println("Controls:processData");
 	    #ifdef DEBUG
 	    Serial.println("Controls:processData");
 		#endif 
@@ -163,8 +94,7 @@ void motorControls::processData()
 			Serial.print(" dir2m2:");
 			Serial.println(dir2_m2);
 			#endif
-			//servo1.detach();
-			//servo2.detach();
+			
 		byte1=getDabbleInstance().getArgumentData(0)[0]; 
 		byte2=getDabbleInstance().getArgumentData(0)[1];
 		#ifdef DEBUG
@@ -179,22 +109,18 @@ void motorControls::processData()
 			if(byte1 == 0xf0)
 			{
 				pwm_Motor1=byte2;
-				//moveMotorAntiClockwise(0);
 			}
 			else if(byte1 == 0xff)
 			{
 				pwm_Motor1= -byte2;
-				//moveMotorClockwise(0);
 			}
 			else if(byte1 == 0x0f)
 			{
 				pwm_Motor1= 0;
-				//stopMotor(0);
 			}
 			else if(byte1 == 0x00)
 			{
 				pwm_Motor1= 0;
-				//stopMotor(0);
 			}
 			
 		}
@@ -204,22 +130,18 @@ void motorControls::processData()
 			if(byte1 == 0xf0)
 			{
 				pwm_Motor2= byte2;
-				//moveMotorAntiClockwise(1);
 			}
 			else if(byte1 == 0xff)
 			{
 				pwm_Motor2= -byte2;
-			   //moveMotorClockwise(1);
 			}
 			else if(byte1 == 0x0f)
 			{
 				pwm_Motor2= 0;
-				//stopMotor(1);
 			}
 			else if(byte1 == 0x00)
 			{
 				pwm_Motor2= 0;
-				//stopMotor(1);
 			}
 		}
 		}
@@ -241,12 +163,13 @@ void motorControls::processData()
 		}
 		
 }
-void motorControls::runMotor1(int a)
+
+void motorControls::runMotor1()
 {
 	pinMode(pwm_1,OUTPUT);
 	pinMode(dir1_m1,OUTPUT);
 	pinMode(dir2_m1,OUTPUT);
-	Serial.println(a);
+	int a = pwm_Motor1;
 	if(a>0)
 	{
 		analogWrite(pwm_1,a);
@@ -270,21 +193,22 @@ void motorControls::runMotor1(int a)
 
 
 
-void motorControls::runMotor2(int b)
+void motorControls::runMotor2()
 {
 	pinMode(pwm_2,OUTPUT);
 	pinMode(dir1_m2,OUTPUT);
 	pinMode(dir2_m2,OUTPUT);
-	if(b>0)
+	int a = pwm_Motor2;
+	if(a>0)
 	{
-		analogWrite(pwm_2,b);
+		analogWrite(pwm_2,a);
 		digitalWrite(dir1_m2,HIGH);
 		digitalWrite(dir2_m2,LOW);
 	}
-	else if(b<0)
+	else if(a<0)
 	{
-		b=-b;
-		analogWrite(pwm_2,b);
+		a=-a;
+		analogWrite(pwm_2,a);
 		digitalWrite(dir1_m2,LOW);
 		digitalWrite(dir2_m2,HIGH);
 	}
@@ -295,4 +219,58 @@ void motorControls::runMotor2(int b)
 		digitalWrite(dir2_m2,LOW);
 	}
 }
-//motorControls Control;
+
+void motorControls::runMotor1(uint8_t direction1,uint8_t direction2,uint8_t pwmPin)
+{
+	pinMode(pwmPin,OUTPUT);
+	pinMode(direction1,OUTPUT);
+	pinMode(direction2,OUTPUT);
+	int a = pwm_Motor1;
+	if(a>0)
+	{
+		analogWrite(pwmPin,a);
+		digitalWrite(direction1,HIGH);
+		digitalWrite(direction2,LOW);
+	}
+	else if(a<0)
+	{
+		a=-a;
+		analogWrite(pwmPin,a);
+		digitalWrite(direction1,LOW);
+		digitalWrite(direction2,HIGH);
+	}
+	else
+	{
+		analogWrite(pwmPin,0);
+		digitalWrite(direction1,LOW);
+		digitalWrite(direction2,LOW);
+	}
+}
+
+void motorControls::runMotor2(uint8_t direction1,uint8_t direction2,uint8_t pwmPin)
+{
+	pinMode(pwmPin,OUTPUT);
+	pinMode(direction1,OUTPUT);
+	pinMode(direction2,OUTPUT);
+	int a = pwm_Motor2;
+	if(a>0)
+	{
+		analogWrite(pwmPin,a);
+		digitalWrite(direction1,HIGH);
+		digitalWrite(direction2,LOW);
+	}
+	else if(a<0)
+	{
+		a=-a;
+		analogWrite(pwmPin,a);
+		digitalWrite(direction1,LOW);
+		digitalWrite(direction2,HIGH);
+	}
+	else
+	{
+		analogWrite(pwmPin,0);
+		digitalWrite(direction1,LOW);
+		digitalWrite(direction2,LOW);
+	}
+}
+//motorControls Control; 

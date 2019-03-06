@@ -11,13 +11,13 @@
 
 
 //Literals
-#define RGB_3bit        3
-#define RGB_15bit       15
-#define RGB_24bit       24
+#define RGB_3BIT        3
+#define RGB_15BIT       15
+#define RGB_24BIT       24
 
-#define GRAYSCALE_1bit  1
-#define GRAYSCALE_4bit  4
-#define GRAYSCALE_8bit  8
+#define GRAYSCALE_1BIT  1
+#define GRAYSCALE_4BIT  4
+#define GRAYSCALE_8BIT  8
 
 //#define GRID_5x1                 0x04
 #define GRID_3x3                 0x03
@@ -27,11 +27,11 @@
 #define DOMINANT         0x01
 #define AVERAGE           0x02
 
-#define Red    0x01
-#define Green  0x02
-#define Blue   0x03
-#define Yellow 0x04
-#define Violet 0x05
+#define RED    0x01
+#define GREEN  0x02
+#define BLUE   0x03
+#define YELLOW 0x04
+#define VIOLET 0x05
 
 class ColorPrediction
 {
@@ -44,10 +44,11 @@ class ColorPrediction
 	float deviation = 0;
 };
 
-class ColorDetectorModule:public ModuleParent ,public ColorPrediction
+class ColorDetectorModule:public ModuleParent, public ColorPrediction
 {
 public:
 ColorDetectorModule();
+//Arduino
 void setColorScheme(byte);
 void setGridSize(byte);
 void setCalculationMode(byte);
@@ -62,6 +63,11 @@ uint8_t getColorScheme();
 uint8_t getCalculationMode();
 int getGrayScaleColor(byte,byte);
 void sendSettings(void(*)(void));
+
+//Pictoblox
+void sendSettings(uint8_t,uint8_t,uint8_t);
+int getColorValue(uint8_t,uint8_t,uint8_t);
+
 private:
 void processData();
 void (*settingsCallBack)(void);
@@ -72,7 +78,5 @@ uint8_t gridSize=0;
 uint8_t colorScheme=0;
 uint8_t calculationMode=0;
 };
-
-
 extern ColorDetectorModule ColorDetector;
 #endif

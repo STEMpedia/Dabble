@@ -4,7 +4,6 @@
 
 LedControlModule::LedControlModule(): ModuleParent(LEDCONTROL_ID)
 {
-	Serial.println("LED execute");
 }
 
 void LedControlModule::processData()

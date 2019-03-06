@@ -25,7 +25,7 @@ bool   response = 0;
 String response_data = "";
 String send_data="";
 void setup() {
-  Serial.begin(250000);
+  Serial.begin(9600);
   mySerial.begin(38400);   
   checkATresponse();
   // put your setup code here, to run once:

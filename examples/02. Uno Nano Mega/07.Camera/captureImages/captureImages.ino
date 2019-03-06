@@ -35,20 +35,20 @@ void loop() {
   char a = processSerialdata();
   if( a == '1')
   {
-    Camera.setParameters(Front,Off,High,0);   //Camera Direction, Flash, quality, Zoom(from 0 to 100%)
+    Camera.setParameters(FRONT,OFF,HIGH_QUALITY,0);   //Camera Direction, Flash, quality, Zoom(from 0 to 100%)
     Camera.captureImage();
   }
   if( a == '2')
   {
-    Camera.flipTo(Rear);
-    Camera.flashMode(Off);
-    Camera.setQuality(Low);
+    Camera.flipTo(REAR);
+    Camera.flashMode(OFF);
+    Camera.setQuality(LOW);
     Camera.captureImage();
   }
   if(a == '3')
   {
-    Camera.flipTo(Rear);
-    Camera.setQuality(High);
+    Camera.flipTo(REAR);
+    Camera.setQuality(HIGH_QUALITY);
     Camera.zoom(50);
     Camera.captureImage();
   }
@@ -61,7 +61,7 @@ void printMessage()
   Serial.println("Enter any number between 1 to 3 for executing task corresponding to that number: ");
   Serial.println("Tasks executed on sending different numbers are as followed: ");
   Serial.println("1 - Take a high quality image from front camera with no flash and no zoom.");
-  Serial.println("2 - Take an image from rear camera with Off flash and no zoom");
+  Serial.println("2 - Take a low quality image from rear camera with Off flash and no zoom");
   Serial.println("3 - Take a 50% zoomed image from Rear camera with high quality"); 
 }
 

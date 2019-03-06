@@ -34,8 +34,12 @@ void loop() {
     Serialdata = "";
     dataflag = 0;
   }
-  while (Terminal.available() != 0)
+  if(Terminal.available())
   {
-    Serial.write(Terminal.read());
+    while (Terminal.available() != 0)
+    {
+      Serial.write(Terminal.read());
+    }
+    Serial.println();
   }
 }

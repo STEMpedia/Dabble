@@ -26,7 +26,7 @@ void initialSetup()
 {
   ColorDetector.setGridSize(GRID_1x1);
   ColorDetector.setCalculationMode(DOMINANT);
-  ColorDetector.setColorScheme(RGB_24bit);
+  ColorDetector.setColorScheme(RGB_24BIT);
 }
 //to store red, green and blue color component values
 int color[3] = {-1, -1, -1};  //store data in this array in R,G,B sequence. All three color components initialised to -1. 
@@ -43,22 +43,22 @@ void loop() {
   color[1] = ColorDetector.getGreenColor();
   color[2] = ColorDetector.getBlueColor();
   Serial.print("Color Found: ");
-  if(ColorDetector.checkColor(color,Red) == 1)
+  if(ColorDetector.checkColor(color,RED) == 1)
   {
     Serial.println("Red");
   }
-  else if(ColorDetector.checkColor(color,Green) == 1)
+  else if(ColorDetector.checkColor(color,GREEN) == 1)
   {
     Serial.println("Green");
   }
-  else if(ColorDetector.checkColor(color,Blue) == 1)
+  else if(ColorDetector.checkColor(color,BLUE) == 1)
   {
     Serial.println("Blue");
   }
-  else if(ColorDetector.checkColor(color,Yellow) == 1)
+  else if(ColorDetector.checkColor(color,YELLOW) == 1)
   {
     Serial.println("Yellow");
-  }else if(ColorDetector.checkColor(color,Violet) == 1)
+  }else if(ColorDetector.checkColor(color,VIOLET) == 1)
   {
     Serial.println("Violet");
   }

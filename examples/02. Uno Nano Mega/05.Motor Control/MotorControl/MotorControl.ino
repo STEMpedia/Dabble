@@ -47,6 +47,6 @@ void loop() {
   Dabble.processInput();             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.             //this function is used to refresh data obtained from smartphone.Hence calling this function is mandatory in order to get data properly from your mobile.
   servo1.write(Control.getangle_Servo1());
   servo2.write(Control.getangle_Servo2());
-  Control.runMotor1(Control.getpwm_Motor1());
-  Control.runMotor2(Control.getpwm_Motor2());
+  Control.runMotor1();
+  Control.runMotor2();
 }

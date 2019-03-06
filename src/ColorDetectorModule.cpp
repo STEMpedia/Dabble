@@ -1,6 +1,7 @@
 #define FROM_DABBLE_LIBRARY
 #include "Dabble.h"
 #include "ColorDetectorModule.h"
+int checksettings=0;
 
 float idealColorValue[5][3] ={  {255, 0, 0},         //RGB for red
 							    {0, 255, 0},         //RGB for Green
@@ -8,7 +9,6 @@ float idealColorValue[5][3] ={  {255, 0, 0},         //RGB for red
 								{255, 242, 0},       //RGB for Yellow
 								{148, 0, 211},       //RGB for Violet
 							 }; 
-
 
 ColorDetectorModule::ColorDetectorModule():ModuleParent(COLORDETECTOR_ID),ColorPrediction()
 {
@@ -19,22 +19,97 @@ void ColorDetectorModule::sendSettings(void(*function)(void))
 	checksettingsCallBack=true;
 	settingsCallBack = function;
 }
+void ColorDetectorModule::sendSettings(uint8_t Grid,uint8_t calcMode,uint8_t ColorScheme)
+{
+	checksettings =3;
+	#ifdef DEBUG
+	Serial.print("Settings Callback: ");
+	Serial.println(checksettings);
+	#endif
+	if(Grid == 1)   //1x1
+	{
+		gridSize = 1;           
+	}
+	else if(Grid == 2)   //3x3
+	{
+		gridSize = 3;           
+	}
+	else if(Grid == 3)  //5x5
+	{
+		gridSize = 5;
+	}
+	if(calcMode == 1)   //Dominant
+	{
+		calculationMode = 1;
+	}
+	else if(calcMode == 2) // Average
+	{
+		calculationMode = 2;
+	}
+    if(ColorScheme == 6 )    //GRAYSCALE_1BIT
+	{		
+		colorScheme = 1 ;
+	}
+	else if(ColorScheme == 5 )    //GRAYSCALE_4BIT
+	{		
+		colorScheme = 4;
+	}
+	else if(ColorScheme == 4 )    //GRAYSCALE_8BIT
+	{		
+		colorScheme = 8 ;
+	}
+	else if(ColorScheme == 3 )    //Rgb_3bit
+	{		
+		colorScheme = 3 ;
+	}
+	else if(ColorScheme == 2 )    //Rgb_15bit
+	{		
+		colorScheme = 15 ;
+	}
+	else if(ColorScheme == 1)   //Rgb_24bit
+	{
+		colorScheme = 24;
+	}
+	
+}
 void ColorDetectorModule::processData()
 {
+	if(checksettings != 0)
+	{ 
+		if(checksettings == 3)
+		{
+			Dabble.sendModuleFrame(COLORDETECTOR_ID,0,COLOR_SCHEME,1,new FunctionArg(1,&colorScheme));
+			checksettings = 2;
+		}
+		else if(checksettings == 2)
+		{
+			Dabble.sendModuleFrame(COLORDETECTOR_ID,0,GRID_SETTING,1,new FunctionArg(1,&gridSize));
+			checksettings =1;
+		}
+		else if(checksettings == 1)
+		{
+			Dabble.sendModuleFrame(COLORDETECTOR_ID,0,COLOR_CALCULATION_TYPE,1,new FunctionArg(1,&calculationMode));
+			checksettings =0;
+		}
+	}
+	
 	if(checksettingsCallBack == true)
 	{
 		checksettingsCallBack=false;
 	    (*settingsCallBack)();
 	}
+	
 	byte functionID = getDabbleInstance().getFunctionId();
-	if(functionID == COLOR_DATA)
+	if(functionID == COLOR_DATA )
 	{
-		colorScheme = getDabbleInstance().getArgumentData(0)[0];      //First arg line stores color settings
-		calculationMode = getDabbleInstance().getArgumentData(0)[1];
-		gridSize = getDabbleInstance().getArgumentData(0)[2];
-		
+		if(checksettings == 0)
+		{
+		 colorScheme = getDabbleInstance().getArgumentData(0)[0];      //First arg line stores color settings
+		 calculationMode = getDabbleInstance().getArgumentData(0)[1];
+		 gridSize = getDabbleInstance().getArgumentData(0)[2];
+		}
 		//Second arg line onwards color values are stored.
-		if(currentArgnumber != getDabbleInstance().getArgumentNo())   //checks if 
+		if(currentArgnumber != getDabbleInstance().getArgumentNo())
 		{
 			if(currentArgnumber!=0)
 			{
@@ -59,13 +134,13 @@ void ColorDetectorModule::processData()
 				 #ifdef DEBUG
 				 Serial.print(colorArray[i-1][j]);
 				 Serial.print(" ");
-				 #endif
+			     #endif
                }
 			   #ifdef DEBUG
 			   Serial.println();
 			   #endif
 		  }
-    }
+	}
 }
 void ColorDetectorModule::setColorScheme(byte bitScheme)
 {
@@ -211,9 +286,99 @@ int ColorDetectorModule::getBlueColor(byte row, byte col)
 	}
 }
 
+uint8_t ColorDetectorModule::getGridSize()
+{
+	return gridSize;
+}
+
+uint8_t ColorDetectorModule::getColorScheme()
+{
+	return colorScheme;
+}
+
+uint8_t ColorDetectorModule::getCalculationMode()
+{
+	return calculationMode;
+}
+
+int ColorDetectorModule::getColorValue(uint8_t colorName,uint8_t Row,uint8_t Col)
+{
+	if(gridSize == 3 && (Row < 3 && Col < 3))
+	{
+		if(colorName == 1)    //Red
+		{
+			return getRedColor(Row,Col);
+		}
+		else if(colorName == 2)    //Green
+		{
+			return getGreenColor(Row,Col);
+		}
+		else if(colorName == 3)    //Blue
+		{
+			return getBlueColor(Row,Col);
+		}
+		else if(colorName == 4)  //Black
+		{
+			if((colorScheme == GRAYSCALE_1BIT) || (colorScheme == GRAYSCALE_4BIT) || (colorScheme == GRAYSCALE_8BIT))
+			return getRedColor(Row,Col);
+		    else 
+			return -1;
+     	}
+	}
+	else if(gridSize == 5 && (Row<5 && Col<5))
+	{
+		if(colorName == 1)    //Red
+		{
+			return getRedColor(Row,Col);
+		}
+		else if(colorName == 2)    //Green
+		{
+			return getGreenColor(Row,Col);
+		}
+		else if(colorName == 3)    //Blue
+		{
+			return getBlueColor(Row,Col);
+		}
+		else if(colorName == 4)  //Black
+		{
+            if((colorScheme == GRAYSCALE_1BIT) || (colorScheme == GRAYSCALE_4BIT) || (colorScheme == GRAYSCALE_8BIT))
+			return getRedColor(Row,Col);
+		    else 
+			return -1;
+		}
+	}
+	else if(gridSize == 1 && (Row<1 && Col<1))
+	{
+		if(colorName == 1)    //Red
+		{
+			return getRedColor();
+		}
+		else if(colorName == 2)    //Green
+		{
+			return getGreenColor();
+		}
+		else if(colorName == 3)    //Blue
+		{
+			return getBlueColor();
+		}
+		else if(colorName == 4)  //Black
+		{
+			if((colorScheme == GRAYSCALE_1BIT) || (colorScheme == GRAYSCALE_4BIT) || (colorScheme == GRAYSCALE_8BIT))
+			return getRedColor();
+		    else 
+			return -1;
+        }
+	}
+	else
+	{
+		return -1;
+	}
+	
+}
+
 int ColorDetectorModule::getGrayScaleColor(byte row,byte col)
 {
-	if(currentArgnumber!=0 && (colorScheme == GRAYSCALE_1bit || colorScheme == GRAYSCALE_4bit || colorScheme == GRAYSCALE_8bit))
+	if(currentArgnumber!=0 && (colorScheme == GRAYSCALE_1BIT || colorScheme == GRAYSCALE_4BIT || colorScheme == GRAYSCALE_8BIT))
 	{
 		if(row == 0)
 		{
@@ -241,22 +406,6 @@ int ColorDetectorModule::getGrayScaleColor(byte row,byte col)
 		return -1;
 	}
 }
-
-uint8_t ColorDetectorModule::getGridSize()
-{
-	return gridSize;
-}
-
-uint8_t ColorDetectorModule::getColorScheme()
-{
-	return colorScheme;
-}
-
-uint8_t ColorDetectorModule::getCalculationMode()
-{
-	return calculationMode;
-}
-
 
 ColorPrediction::ColorPrediction(){
 	min_deviation = 255;
