@@ -42,7 +42,7 @@ void loop() {
   {
     Camera.flipTo(REAR);
     Camera.flashMode(OFF);
-    Camera.setQuality(LOW);
+    Camera.setQuality(LOW_QUALITY);
     Camera.captureImage();
   }
   if(a == '3')
