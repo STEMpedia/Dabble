@@ -51,7 +51,6 @@ void loop() {
     Camera.flipTo(REAR);
     Camera.setQuality(HIGH_QUALITY);
     Camera.zoom(50);
-    Camera.captureImage();
     Camera.startRecording();
   }
 
