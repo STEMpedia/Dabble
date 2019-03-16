@@ -24,6 +24,14 @@ public:
 	bool getStatus_TactileSwitch2();
 	uint16_t getInputsData(uint8_t a);
 
+        //PictoBlox
+	bool getSlideSwitchStatus(uint8_t SS,uint8_t dir); //1 2 SS1 left       //2 2 SS2 left
+	                                                   //1 3  SS1 right     //2 3 SS2 right
+	                                                   //1 1  SS1 Off       //2 1 SS2 Off
+	bool getTactileSwitchStatus(uint8_t TS);	//1 TS1  2 TS2											 
+													 
+	int  getPotValue(uint8_t Pot);
+ 	
 public:
 	byte functionId;
 	
