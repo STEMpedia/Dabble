@@ -46,3 +46,15 @@ EXTERN ColorDetectorModule ColorDetector;
 #ifdef INCLUDE_DATALOGGER_MODULE
 EXTERN DataLoggerModule DataLogger;
 #endif
+
+#ifdef INCLUDE_SMS_MODULE
+EXTERN SMSModule SMS;
+#endif
+
+#ifdef INCLUDE_NOTIFICATION_MODULE
+EXTERN NotificationModule Notification;
+#endif  
+
+#ifdef INCLUDE_MUSIC_MODULE
+EXTERN MusicModule Music;
+#endif 

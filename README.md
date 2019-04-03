@@ -12,7 +12,7 @@ Dabble consists of various modules that allows you to control your hardware and 
 4)  Pin State Monitor: Remotely monitor the live status of devices and debug them.
 5)  Motor Control: Control actuators such as the DC motor and servo motor.
 6)  Inputs: Provide analog and digital inputs via buttons, knobs, and switches.
-7)  Camera: Use the camera of your Smartphone for taking photos and videos, face recognition (coming soon) and colour picking.
+7)  Camera (Coming Soon): Use the camera of your Smartphone for taking photos and videos, face recognition and colour picking.
 8)  Phone Sensor: Access different sensors of your Smartphone such as the accelerometer, gyroscope, proximity sensor,magnetometer, light meter, sound meter, GPS, temperature sensor, and barometer to make projects and conduct experiments.
 9)  Oscilloscope (Coming Soon): Visualise and analyse the input and output signals given to the device using the oscilloscope module.
 10) IoT (Coming Soon): Make the Internet of Things possible.

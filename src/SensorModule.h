@@ -2,7 +2,7 @@
 #define SensorModule_h
 #include "ModuleParent.h"
 #include <math.h>
-
+//function_ids
 #define ACCELEROMETER 0x01
 #define GYROSCOPE 0x02
 #define MAGNETOMETER 0x03
@@ -12,6 +12,12 @@
 #define TEMPERATURE 0x07
 #define BAROMETER 0x08
 #define GPS 0x09
+#define SPEED 0x0A
+
+//Literals
+#define SLOW   0x03
+#define MEDIUM 0x02
+#define FAST   0x01
 
 class SensorModule: public ModuleParent
 {
@@ -34,6 +40,8 @@ class SensorModule: public ModuleParent
 	float getdata_GPS_longitude();
 	float getdata_GPS_latitude();
 	float getSensorData(uint8_t a);
+	
+	void setDataSpeed(uint8_t a);
 	
 	void processData();
 	public:

@@ -7,13 +7,11 @@
 
 
 #if(defined(__AVR_ATmega328P__))
-SoftwareSerial DabbleSoftSerial;    //
+SoftwareSerial DabbleSoftSerial;    
 #endif
 
 bool callBackForDataLogger = false;
 void (*dataLoggerCallBack)(void); 
-
- 
 bool DabbleClass::isInit=false;
 bool DabbleClass::isSws=false;
 byte DabbleClass::ModulesCounter=0;
@@ -28,6 +26,13 @@ Stream * DabbleClass::DabbleSerial = 0;
 byte DabbleClass::requestsCounter=0;
 HttpRequest ** DabbleClass::requestsArray=0;
 // #endif
+
+uint8_t FrameLimits[4][15] = {{0, 1,  2,  3, 4, 5, 6, 7, 8, 9, 10,  11,   12,  13,   14},          //Module-ID
+	                          {3, 3,  2,  3, 9, 4, 2, 0, 2, 3,  3,   4,    6,   5,    3},          //Funtcion_ID
+                              {1, 1,255,  1, 3, 1, 1, 0, 2, 1,  1,  26,    2,   1,    1},          //Arg1
+                              {5, 2,255, 32, 4, 2, 1, 0, 4, 2,  1,   3,   50, 255,    1}};         //Arg2
+
+
 //Class Constructor
 DabbleClass::DabbleClass()
 {
@@ -49,7 +54,6 @@ DabbleClass::DabbleClass()
       isModuleFrameCallback = false;
       isSerialDataCallback = false;
       dontDelay = false;
-	  
 }
 
 //Library Starter
@@ -57,7 +61,7 @@ void DabbleClass::begin(long baudRate,int rx,int tx)
 {
 
 	//Serial.println("In baud rate begin");
-  #if(defined(__AVR_ATmega32U4__) || \
+	#if(defined(__AVR_ATmega32U4__) || \
      defined(ARDUINO_LINUX) || \
      defined(__MK20DX128__) || \
      defined(__MK20DX256__) || \
@@ -99,6 +103,10 @@ void DabbleClass::waitForAppConnection()
 
   while(!isDabbleConnected)
   {
+	/*#ifdef DEBUG
+	Serial.println("Waiting...");
+	#endif*/
+	//Serial.println("Waiting...");
     Dabble.processInput();
   }
 
@@ -396,6 +404,13 @@ void DabbleClass::processInput(int data) {
               datalengthcounter=0;
               argumentcounter=0;
               argumentnumber=data;
+			  if(argumentnumber > FrameLimits[2][Module])
+			  {
+				  framestart = false;
+				  counter = 0;
+				  return;
+			  }
+			//  Serial.println(data);
               //counter++;
           /* }
           else if(counter==5&&framestart)                      //data is the no of arguments
@@ -437,6 +452,12 @@ void DabbleClass::processInput(int data) {
               Serial.print("C4 ");
               #endif
               argumentL[argumentcounter]=data;
+			  if(argumentL[argumentcounter] > FrameLimits[3][Module])
+			  {
+				  framestart = false;
+				  counter = 0;
+				  return;
+			  }
               //counter++;
           /* }
           else if (counter==7&&framestart)                    // data is the first argument Data information
@@ -538,6 +559,12 @@ void DabbleClass::processInput(int data) {
           else if(framestart){
                 if(counter==1){
                   Module=data;
+				  if(Module >  MODULE_NO - 1)    //error loop break
+				  {
+					  counter = 0;
+					  framestart = false;
+					  return;
+				  }					  
                   bool found = false;
                   if(Module == Dabble_ID || isModuleFrameCallback) found = true;
                   else 
@@ -545,11 +572,11 @@ void DabbleClass::processInput(int data) {
                   for (int i=0;i<ModulesCounter;i++) {
                     if (Module == ModulesArray[i]->getModuleId()){
                       found = true;
-                        #ifdef DEBUG
+                        /*#ifdef DEBUG
 						 Serial.print("Module: ");
 						 Serial.print(Module, HEX);
 						 Serial.print(" ");
-						#endif
+						#endif*/
                     }
                    }
 				  }
@@ -569,6 +596,14 @@ void DabbleClass::processInput(int data) {
                 } */
                 else if(counter==2){
                   functions=data;
+				  if(functions > FrameLimits[1][Module])
+				  {
+					  counter = 0;
+					  framestart=false;
+					  return;
+				  }
+				  
+					  
                   #ifdef DEBUG
                   Serial.print("C2 ");
                   #endif
@@ -587,20 +622,22 @@ void DabbleClass::processInput()
 	}*/
 	if(DabbleSerial->available())
 	{
-      while(DabbleSerial->available())
+      	  isDabbleConnected = true;
+	  while(DabbleSerial->available())
      {
+
       byte data=DabbleSerial->read();
-	  #ifdef DEBUG
+	  /*#ifdef DEBUG
 	  Serial.print(data);
 	  Serial.print(" ");
-      #endif	 
-	 processInput(data);
-     if(isSerialDataCallback)
+      #endif	*/ 
+	  processInput(data);
+    /* if(isSerialDataCallback)
      {
       enteringACallback();
       serialDataCallback(data);
       exitingACallback();
-     }  
+     }  */
    }
    /*#ifdef DEBUG
    Serial.println();
@@ -659,10 +696,10 @@ void DabbleClass::processFrame(){
   if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
-      uint8_t BoardId_Mega[4] = {0x02,1,1,0};
-	  uint8_t BoardId_Uno[4] =  {0x03,1,1,0};
-	  uint8_t BoardId_Nano[4] = {0x04,1,1,0};
-	  uint8_t BoardId_Other[4] = {0x05,1,1,0};
+      uint8_t BoardId_Mega[4] = {0x02,1,3,0};
+	  uint8_t BoardId_Uno[4] =  {0x03,1,3,0};
+	  uint8_t BoardId_Nano[4] = {0x04,1,3,0};
+	  uint8_t BoardId_Other[4] = {0x05,1,3,0};
 	  #if ((defined(ARDUINO_AVR_MEGA2560)) || (defined(ARDUINO_AVR_MEGA)))
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Mega));
       #elif(defined(ARDUINO_AVR_NANO))

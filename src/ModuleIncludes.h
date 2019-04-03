@@ -10,4 +10,6 @@
  #include "LedControlModule.h"
  #include "ColorDetectorModule.h"
  #include "DataLoggerModule.h"
+ #include "NotifyAndSMSModule.h"
+ #include "MusicModule.h"
  

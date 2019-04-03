@@ -217,3 +217,7 @@ void SensorModule::processData()
 		}	
 	}
 
+void SensorModule::setDataSpeed(uint8_t a)
+{
+	Dabble.sendModuleFrame(SENSORS_ID,0,SPEED, 1, new FunctionArg(1,&a));
+}

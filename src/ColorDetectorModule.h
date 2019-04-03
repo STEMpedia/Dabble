@@ -1,4 +1,4 @@
-#ifndef ColorDetectorModule_H_
+ #ifndef ColorDetectorModule_H_
 #define ColorDetectorModule_H_
 
 #include "ModuleParent.h"
@@ -11,7 +11,7 @@
 
 
 //Literals
-#define RGB_3BIT        3
+#define RGB_3BIT      3
 #define RGB_15BIT       15
 #define RGB_24BIT       24
 
@@ -27,51 +27,32 @@
 #define DOMINANT         0x01
 #define AVERAGE           0x02
 
-#define RED    0x01
-#define GREEN  0x02
-#define BLUE   0x03
-#define YELLOW 0x04
-#define VIOLET 0x05
-
-class ColorPrediction
-{
-	public:
-	ColorPrediction();
-	bool checkColor(int *colorValue,uint8_t colorName);
-	float  getColorError(uint8_t *colorValue,uint8_t *referenceValue);
-	int colorFlag=0;
-	float min_deviation = 255;
-	float deviation = 0;
-};
-
-class ColorDetectorModule:public ModuleParent, public ColorPrediction
+class ColorDetectorModule:public ModuleParent
 {
 public:
 ColorDetectorModule();
-//Arduino
 void setColorScheme(byte);
 void setGridSize(byte);
 void setCalculationMode(byte);
-int getRedColor();
-int getBlueColor();
-int getGreenColor();
-int getRedColor(byte,byte);   //for different blocks of grid
-int getBlueColor(byte,byte);  //for different blocks of grid
-int getGreenColor(byte,byte); //for different blocks of grid
+uint8_t getRedColor();
+uint8_t getBlueColor();
+uint8_t getGreenColor();
+uint8_t getRedColor(byte,byte);   //for different blocks of grid
+uint8_t getBlueColor(byte,byte);  //for different blocks of grid
+uint8_t getGreenColor(byte,byte); //for different blocks of grid
 uint8_t getGridSize();
 uint8_t getColorScheme();
 uint8_t getCalculationMode();
-int getGrayScaleColor(byte,byte);
-void sendSettings(void(*)(void));
-
-//Pictoblox
 void sendSettings(uint8_t,uint8_t,uint8_t);
 int getColorValue(uint8_t,uint8_t,uint8_t);
-
+//void sendSettings(void(*)(void));
+//uint8_t singlecolorArray[2][3];
+//uint8_t gridcolorArray[10][3];
+//uint8_t grid5x5Array[26][3];
 private:
 void processData();
-void (*settingsCallBack)(void);
-bool checksettingsCallBack;
+//void (*settingsCallBack)(void);
+
 uint8_t** colorArray;
 uint8_t currentArgnumber=0;
 uint8_t gridSize=0;
