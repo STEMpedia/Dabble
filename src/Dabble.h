@@ -2,14 +2,14 @@
  * This library is developed for Dabble app. https://thestempedia.com/product/dabble/
  * It includes modulewise sublibraries as per modules present in 
  * Dabble app.
- * Version 1.0.0
+ * Version 1.4.0
  * 
  * This library structure is derived from OneSheeld Library.
  *
  * This is licensed under GNU GPL V3 [http://www.gnu.org/licenses/gpl.txt].
  * Written by Dhrupal R Shah for evive platform, Agilo Research Pvt. Ltd
  * Created on: December 4, 2018
- * Updated on: 20190304
+ * Updated on: 20190409                  //yyyymmdd
  * Contact: support@evive.cc
  * Copyright (c) 2018 Agilo Research Pvt. Ltd.  All rights reserved.
  *

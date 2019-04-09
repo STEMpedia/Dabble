@@ -48,7 +48,7 @@ public:
 	uint16_t getAngle();
 	uint8_t getRadius();
 	bool isPressed(uint8_t a);
-	float getJoystickdata(uint8_t b);
+	float getJoystickData(uint8_t b);
 	float getx_axis();
 	float gety_axis();
 	//setOnChange for Users Function

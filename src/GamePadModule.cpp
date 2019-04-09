@@ -192,7 +192,7 @@ void GamePadModule::processData()
 	
 }
 
-float GamePadModule::getJoystickdata(uint8_t b)
+float GamePadModule::getJoystickData(uint8_t b)
 {
 		uint16_t angle=((value >> 3)*15);
 		uint8_t radius=value&0x07;

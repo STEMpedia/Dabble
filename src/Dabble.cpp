@@ -1,4 +1,3 @@
-
 #define FROM_DABBLE_LIBRARY
 #include "Dabble.h"
 #include "HardwareSerial.h"
@@ -615,34 +614,17 @@ void DabbleClass::processInput(int data) {
 
 void DabbleClass::processInput()
 {
-
-	/*if(DabbleSerial == &DabbleSoftSerial)
+    if(DabbleSerial->available())
 	{
-		Serial.println("myserial initials");
-	}*/
-	if(DabbleSerial->available())
-	{
-      	  isDabbleConnected = true;
+      	isDabbleConnected = true;
 	  while(DabbleSerial->available())
      {
 
-      byte data=DabbleSerial->read();
-	  /*#ifdef DEBUG
-	  Serial.print(data);
-	  Serial.print(" ");
-      #endif	*/ 
-	  processInput(data);
-    /* if(isSerialDataCallback)
-     {
-      enteringACallback();
-      serialDataCallback(data);
-      exitingACallback();
-     }  */
-   }
-   /*#ifdef DEBUG
-   Serial.println();
-   #endif*/
-  }
+		byte data=DabbleSerial->read();
+		processInput(data);
+		
+     }
+    }
 }
 
 void DabbleClass::freeMemoryAllocated(){
@@ -696,10 +678,10 @@ void DabbleClass::processFrame(){
   if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
-      uint8_t BoardId_Mega[4] = {0x02,1,3,0};
-	  uint8_t BoardId_Uno[4] =  {0x03,1,3,0};
-	  uint8_t BoardId_Nano[4] = {0x04,1,3,0};
-	  uint8_t BoardId_Other[4] = {0x05,1,3,0};
+      uint8_t BoardId_Mega[4] = {0x02,1,4,0};
+	  uint8_t BoardId_Uno[4] =  {0x03,1,4,0};
+	  uint8_t BoardId_Nano[4] = {0x04,1,4,0};
+	  uint8_t BoardId_Other[4] = {0x05,1,4,0};
 	  #if ((defined(ARDUINO_AVR_MEGA2560)) || (defined(ARDUINO_AVR_MEGA)))
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Mega));
       #elif(defined(ARDUINO_AVR_NANO))

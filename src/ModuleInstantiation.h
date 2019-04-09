@@ -23,9 +23,9 @@ EXTERN GamePadModule GamePad;
 EXTERN PinMonitorModule PinMonitor;
 #endif
 
-#ifdef INCLUDE_OSCILLOSCOPE_MODULE
+/*#ifdef INCLUDE_OSCILLOSCOPE_MODULE
 EXTERN OscilloscopeModule Oscilloscope;
-#endif
+#endif*/
 
 #ifdef INCLUDE_SENSOR_MODULE
 EXTERN SensorModule Sensor;

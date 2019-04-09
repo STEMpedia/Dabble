@@ -4,7 +4,7 @@
  #include "TerminalModule.h"
  #include "GamePadModule.h"
  #include "PinMonitorModule.h"
- #include "OscilloscopeModule.h"
+ //#include "OscilloscopeModule.h"
  #include "SensorModule.h"
  #include "CameraModule.h"
  #include "LedControlModule.h"
