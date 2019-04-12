@@ -60,7 +60,7 @@ void ColorDetectorModule::sendSettings(uint8_t Grid, uint8_t calcMode, uint8_t C
 void ColorDetectorModule::sendSettings(void(*function)(void))
   {
 	checksettingsCallBack=true;
-	//settingsCallBack = function;
+	settingsCallBack = function;
   }
 void ColorDetectorModule::processData()
 {
