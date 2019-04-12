@@ -45,7 +45,7 @@ uint8_t getColorScheme();
 uint8_t getCalculationMode();
 void sendSettings(uint8_t,uint8_t,uint8_t);
 int getColorValue(uint8_t,uint8_t,uint8_t);
-//void sendSettings(void(*)(void));
+void sendSettings(void(*)(void));
 //uint8_t singlecolorArray[2][3];
 //uint8_t gridcolorArray[10][3];
 //uint8_t grid5x5Array[26][3];
