@@ -22,14 +22,14 @@ bool DabbleClass::isFirstFrame=false;
 ModuleParent * DabbleClass::ModulesArray[]={0};
 Stream * DabbleClass::DabbleSerial = 0;
 // #ifdef INTERNET_Module
-byte DabbleClass::requestsCounter=0;
-HttpRequest ** DabbleClass::requestsArray=0;
+//byte DabbleClass::requestsCounter=0;
+//HttpRequest ** DabbleClass::requestsArray=0;
 // #endif
 
-uint8_t FrameLimits[4][15] = {{0, 1,  2,  3, 4, 5, 6, 7, 8, 9, 10,  11,   12,  13,   14},          //Module-ID
-	                          {3, 3,  2,  3, 9, 4, 2, 0, 2, 3,  3,   4,    6,   5,    3},          //Funtcion_ID
-                              {1, 1,255,  1, 3, 1, 1, 0, 2, 1,  1,  26,    2,   1,    1},          //Arg1
-                              {5, 2,255, 32, 4, 2, 1, 0, 4, 2,  1,   3,   50, 255,    1}};         //Arg2
+uint8_t FrameLimits[4][18] = {{0, 1,  2,  3, 4, 5, 6, 7, 8, 9, 10,  11,   12,  13,   14, 15, 16,  17},          //Module-ID
+	                          {3, 3,  2,  3, 9, 4, 2, 0, 2, 3,  3,   4,    6,   5,    3,  5, 5,    3},          //Funtcion_ID
+                              {1, 1,255,  1, 3, 1, 1, 0, 2, 1,  1,  26,    2,   1,    1, 10, 10, 255},          //Arg1
+                              {5, 2,255, 32, 4, 2, 1, 0, 4, 2,  1,   3,   50, 255,    1, 10, 10, 255}};         //Arg2
 
 
 //Class Constructor
@@ -115,12 +115,12 @@ void DabbleClass::init()
 {
   isInit=true;
   sendModuleFrame(Dabble_ID,0,CHECK_CONNECTION,0);
-  if(requestsArray!=0){
+  /*if(requestsArray!=0){
     for(int i=0;i<requestsCounter;i++)
       requestsArray[i]->sendInitFrame();
     free(requestsArray);
     requestsCounter=0;
-  }
+  }*/
 }
 
 //Library Starter
@@ -152,13 +152,13 @@ void DabbleClass::addToModulesArray(ModuleParent * Module)
   
 }
 // #ifdef INTERNET_Module
-void DabbleClass::addToUnSentRequestsArray(HttpRequest * request)
+/*void DabbleClass::addToUnSentRequestsArray(HttpRequest * request)
 {
   if(requestsCounter==MAX_NO_OF_REQUESTS) return;
   if(requestsCounter<=0)
     requestsArray=(HttpRequest**)malloc(sizeof(HttpRequest*)*MAX_NO_OF_REQUESTS);
   requestsArray[requestsCounter++] = request;  
-}
+}*/
 // #endif
 bool DabbleClass::isInitialized()
 {
@@ -211,13 +211,13 @@ void DabbleClass::sendModuleFrame(byte ModuleID, byte instanceID, byte functionI
           TempDabble.processInput(TempDabble.DabbleSerial->read());
      }
       ModuleParent::unSetDabbleInstance();
-   }else
+    }else
       while((millis()<(TIME_GAP+localLastTimeFrameSent))||framestart)
       {
         if(DabbleSerial->available())
           Dabble.processInput(DabbleSerial->read());
       }
-  }
+    }
 
   isFirstFrame=true;
   va_list arguments ;
@@ -373,253 +373,162 @@ float DabbleClass::convertBytesToFloat(byte *data)
 
 //Incomming Frames processing 
 void DabbleClass::processInput(int data) {
-	#ifdef DEBUG
-	Serial.print(data, HEX);
-	Serial.print(" ");
-	#endif
-    
-	if(data==-1){
-		return;
+  if (data == -1)
+  {
+    return;
+  }
+  if((millis() - argumentDataBytesTimeReceived) > 2000 && argumentDataBytesTimeReceived !=0 && framestart) 
+  {
+		freeMemoryAllocated();
+  }
+  argumentDataBytesTimeReceived = millis();
+  #ifdef DEBUG
+  Serial.println("counter " + String(counter));
+  #endif
+  if ((counter == 1) && framestart)
+  {
+    #ifdef DEBUG
+	Serial.print("C2- ");
+    #endif
+	Module = data;
+    if (Module > MODULE_NO - 1)
+    {
+      #ifdef DEBUG
+	  Serial.println("WrongModule");
+      #endif
+	  return;
+    }
+    counter++;
+  }
+  else if ((counter == 2) && framestart)
+  {
+    #ifdef DEBUG
+	Serial.print("C3- ");
+    #endif
+	functions = data;
+    if (functions > FrameLimits[1][Module])
+    {
+      #ifdef DEBUG
+	  Serial.println("Wrongfunctions");
+      #endif
+	  return;
+    }
+    counter++;
+  }
+  else if ((counter == 3) && framestart)
+  {
+    #ifdef DEBUG
+	Serial.print("C4- ");
+    #endif
+	if (data > FrameLimits[2][Module])
+    {
+      #ifdef DEBUG
+	  Serial.println("WrongArgId");
+      #endif
+	  return;
+    }
+    argumentnumber = data;
+    if (argumentnumber != 0)
+    {
+      argumentL = new byte[argumentnumber];
+      arguments = new byte*[argumentnumber];
+    }// argumentL = (byte*) malloc(sizeof(byte) * argumentnumber);
+    // arguments = (byte**)malloc(sizeof(byte) * argumentnumber);
+    isArgumentLengthMalloced = 1;
+    counter++;
+  }
+  else if ((counter == 4) && framestart)
+  {
+	#ifdef DEBUG  
+    Serial.print("C5- ");
+    #endif
+	if (data == 0)
+    {
+      //Serial.println(counter);
+      counter = 6;
+      return;
+      //Serial.println(counter);
+    }
+    if (data > FrameLimits[3][Module])
+    {
+      #ifdef DEBUG
+	  Serial.println("WrongArg2Id");
+      #endif
+	  freeMemoryAllocated();
+      return;
+    }
+    argumentL[argumentcounter] = data;
+    // arguments[argumentcounter] = (byte*)malloc(sizeof(byte) * (argumentL[argumentcounter]));
+    arguments[argumentcounter] = new byte[argumentL[argumentcounter]];
+    isArgumentsNumberMalloced = 1;
+    counter++;
+  }
+  else if ((counter == 5) && framestart)
+  {
+    #ifdef DEBUG
+	Serial.print("C6- ");
+    #endif
+	if (datalengthcounter < argumentL[argumentcounter])
+    {
+      arguments[argumentcounter][datalengthcounter] = data;
+      datalengthcounter++;
+    }
+    if (datalengthcounter == argumentL[argumentcounter])
+    {
+      counter = 4;
+      datalengthcounter = 0;
+      argumentcounter++;
+    }
+    if (argumentcounter == argumentnumber)
+    {
+      counter = 6;
+    }
+    //  Serial.println("datalengthcounter" + String(datalengthcounter));
+    // Serial.println("currentArgNumber" + String(argumentcounter));
+  }
+  else if (counter == 6 && framestart)
+  {
+	#ifdef DEBUG  
+    Serial.print("C7- ");
+    #endif
+	if (data == END_OF_FRAME)
+    {
+	  #ifdef DEBUG	
+      Serial.println("EndFrame");
+      #endif
+	  sendToModules();
+	  counter = 0;
+      framestart = 0;
+      freeMemoryAllocated();
 	}
-    if((millis() - argumentDataBytesTimeReceived) > 2000 && argumentDataBytesTimeReceived !=0 && framestart) 
-      {
-        freeMemoryAllocated();
-      }
-      argumentDataBytesTimeReceived = millis();
-     if(!framestart&&data==START_OF_FRAME)
-          {
-              freeMemoryAllocated();
-              counter=0;
-              framestart=true;
-              arguments=0;
-              argumentL=0;
-              counter++;
-          }
-          else if(counter==3&&framestart)                      //data is the no of arguments
-          {
-              #ifdef DEBUG
-              Serial.print("C3 ");
-              #endif
-              datalengthcounter=0;
-              argumentcounter=0;
-              argumentnumber=data;
-			  if(argumentnumber > FrameLimits[2][Module])
-			  {
-				  framestart = false;
-				  counter = 0;
-				  return;
-			  }
-			//  Serial.println(data);
-              //counter++;
-          /* }
-          else if(counter==5&&framestart)                      //data is the no of arguments
-          {
-              #ifdef DEBUG
-              Serial.print("C5 ");
-              #endif
-              if((255-argumentnumber)==data&&argumentnumber==0){
-                counter=9;
-                return;
-              }
-              else if((255-argumentnumber)==data){ */
-			  
-			  if(argumentnumber != 0)
-			  {
-              arguments=(byte**)malloc(sizeof(byte*)*argumentnumber);//new byte*[argumentnumber];          //assigning the first dimension of the pointer (allocating dynamically space for 2d array)
-              #ifdef DEBUG
-              Serial.print("M1 ");
-              #endif
-              isArgumentsNumberMalloced=true;
-              argumentL=(byte*)malloc(sizeof(byte)*argumentnumber);//new byte [argumentnumber];
-              #ifdef DEBUG
-              Serial.print("M2 ");
-              #endif
-              isArgumentLengthMalloced=true;
-              }
-			  counter++;
-			  
-              //}
-/*               else{
-                framestart=false;
-                freeMemoryAllocated();
-                return;
-              } */
-            }
-          else if (counter==4&&framestart)                    // data is the first argument length
-          {
-              #ifdef DEBUG
-              Serial.print("C4 ");
-              #endif
-              argumentL[argumentcounter]=data;
-			  if(argumentL[argumentcounter] > FrameLimits[3][Module])
-			  {
-				  framestart = false;
-				  counter = 0;
-				  return;
-			  }
-              //counter++;
-          /* }
-          else if (counter==7&&framestart)                    // data is the first argument Data information
-          {
-            #ifdef DEBUG
-            Serial.print("C7 ");
-            #endif
-            if((255-argumentL[argumentcounter])==data){ */
-			if(argumentnumber !=0)
-			{
-             if(argumentL[argumentcounter]!=0)                       //if(argumentL[argumentcounter]!=0)
-              {
-                arguments[argumentcounter]=(byte*)malloc(sizeof(byte)*argumentL[argumentcounter]); // assigning the second dimensional of the pointer
-                #ifdef DEBUG
-                Serial.print("M3 ");
-                #endif
-                counter++;
-              }
-              else
-				 {	// Serial.print("ELSE ");
-                arguments[argumentcounter]=NULL;
-                datalengthcounter=0;
-                argumentcounter++;
-                if(argumentcounter==argumentnumber){
-                  counter=6;
-				  //Serial.print("ELSE ctr 6");
-				}
-                else{
-                  counter=4;
-				  //Serial.print("ELSE ctr 4");
-				}
-              }
-			 }
-			else
-			{
-				counter=6;
-				//Serial.println("Argument number is 0");
-			}
-              numberOfDataMalloced++;
-            //}
-/*             else{
-                framestart=false;
-                freeMemoryAllocated();
-                return;
-              } */
-          }
-          else if (counter==5&&framestart)
-          {
-              #ifdef DEBUG
-              Serial.print("C5 ");
-              #endif
-              if(arguments[argumentcounter]!=NULL)
-			  arguments[argumentcounter][datalengthcounter++]=data;
-              if (datalengthcounter==argumentL[argumentcounter])
-              {
-                  datalengthcounter=0;
-                  argumentcounter++;
-                  if(argumentcounter==argumentnumber)
-                  {
-                    counter++;                                    //increment the counter to take the last byte which is the end of the frame
-
-                  }
-                  else
-                  {
-                    counter=4;
-
-                  }
-
-              }
-
-          }
-          else if(counter==6&&framestart)
-          {
-              #ifdef DEBUG
-              Serial.print("C6 ");
-              #endif
-            endFrame=data;
-              if(endFrame==END_OF_FRAME)                                   //if the endframe is equal to zero send to Modules and free memory
-              {
-                      framestart=false;
-					 // Serial.println("Sent to modules");
-					 sendToModules();
-					 if(isModuleFrameCallback && Module!=0)
-                      {
-                        enteringACallback();
-                        ModuleFrameCallback(Module,functions,argumentnumber,argumentL,arguments);
-                        exitingACallback();
-                      }
-                      freeMemoryAllocated();
-					  #ifdef DEBUG
-                      Serial.println();
-					  #endif
-              }
-              else                                            //if endframe wasn't equal to zero make sure that the memory is free anyway
-              {
-                freeMemoryAllocated();
-              }
-          }
-          else if(framestart){
-                if(counter==1){
-                  Module=data;
-				  if(Module >  MODULE_NO - 1)    //error loop break
-				  {
-					  counter = 0;
-					  framestart = false;
-					  return;
-				  }					  
-                  bool found = false;
-                  if(Module == Dabble_ID || isModuleFrameCallback) found = true;
-                  else 
-				  { 
-                  for (int i=0;i<ModulesCounter;i++) {
-                    if (Module == ModulesArray[i]->getModuleId()){
-                      found = true;
-                        /*#ifdef DEBUG
-						 Serial.print("Module: ");
-						 Serial.print(Module, HEX);
-						 Serial.print(" ");
-						#endif*/
-                    }
-                   }
-				  }
-                  if (!found) {
-                    framestart=false;
-                    freeMemoryAllocated();
-                    return;
-                  }
-                }
-/*                 else if(counter==2){
-                  verificationByte=data;
-                  byte leastBits = verificationByte & 0x0F;
-                  if(((255-verificationByte)>>4) != leastBits) framestart =false;
-                  #ifdef DEBUG
-                  Serial.print("C2 ");
-                  #endif
-                } */
-                else if(counter==2){
-                  functions=data;
-				  if(functions > FrameLimits[1][Module])
-				  {
-					  counter = 0;
-					  framestart=false;
-					  return;
-				  }
-				  
-					  
-                  #ifdef DEBUG
-                  Serial.print("C2 ");
-                  #endif
-                }
-            counter++;
-          }
-
+  }
+  else if (counter == 0 && data == START_OF_FRAME)
+  {
+    datalengthcounter = 0;
+    argumentcounter = 0;
+    argumentnumber = 0;
+    framestart = 1;
+    counter++;
+    #ifdef DEBUG
+	Serial.print("C1- ");
+	#endif
+  }
+  #ifdef DEBUG
+  Serial.print(data);
+  Serial.print("  ");
+  #endif
 }
 
 void DabbleClass::processInput()
 {
+
     if(DabbleSerial->available())
 	{
       	isDabbleConnected = true;
 	  while(DabbleSerial->available())
      {
-
+        	//Serial.println("In processInput");
+			
 		byte data=DabbleSerial->read();
 		processInput(data);
 		
@@ -628,29 +537,37 @@ void DabbleClass::processInput()
 }
 
 void DabbleClass::freeMemoryAllocated(){
-  framestart=false;
-  if(isArgumentsNumberMalloced){
-          for(int i=0;i<numberOfDataMalloced;i++)
-          {
-            if(arguments[i]!=NULL)free(arguments[i]);
-            #ifdef DEBUG
-            Serial.print("F3 ");
-            #endif
-          }
-          numberOfDataMalloced=0;
-          free(arguments);
-          #ifdef DEBUG
-          Serial.print("F1 ");
-          #endif
-          isArgumentsNumberMalloced=false;
-        }
-        if(isArgumentLengthMalloced){
-          free(argumentL);
-          #ifdef DEBUG
-          Serial.println("F2 ");
-          #endif
-          isArgumentLengthMalloced=false;
-        }
+  if (isArgumentsNumberMalloced == 1)
+  {
+    for (int i = 0; i < argumentcounter; i++)
+    {
+      #ifdef DEBUG
+	  Serial.print("F3");
+      #endif
+	  //free(arguments[i]);
+      delete [] arguments[i];
+    }
+    //free(arguments);
+    delete [] arguments;
+  }
+  #ifdef DEBUG
+  Serial.print("F1");
+  #endif
+  //free(argumentL);
+  if (isArgumentLengthMalloced == 1)
+  {
+    delete [] argumentL;
+  }
+  isArgumentLengthMalloced = 0;
+  isArgumentsNumberMalloced = 0;
+  #ifdef DEBUG
+  Serial.println("F2");
+  #endif
+  datalengthcounter = 0;
+  argumentcounter = 0;
+  argumentnumber = 0;
+  arguments = NULL;
+  argumentL = NULL;
 }
 
 //Data Sender to Input Modules
@@ -678,10 +595,10 @@ void DabbleClass::processFrame(){
   if(functionId == BOARDID_REQUEST)
   {
 	 // uint8_t BoardId_evive[1]={0x01};
-      uint8_t BoardId_Mega[4] = {0x02,1,4,1};
-	  uint8_t BoardId_Uno[4] =  {0x03,1,4,1};
-	  uint8_t BoardId_Nano[4] = {0x04,1,4,1};
-	  uint8_t BoardId_Other[4] = {0x05,1,4,1};
+      uint8_t BoardId_Mega[4] = {0x02,1,5,0};
+	  uint8_t BoardId_Uno[4] =  {0x03,1,5,0};
+	  uint8_t BoardId_Nano[4] = {0x04,1,5,0};
+	  uint8_t BoardId_Other[4] = {0x05,1,5,0};
 	  #if ((defined(ARDUINO_AVR_MEGA2560)) || (defined(ARDUINO_AVR_MEGA)))
 	  sendModuleFrame(Dabble_ID,0,BOARDID_REQUEST,1,new FunctionArg(4,BoardId_Mega));
       #elif(defined(ARDUINO_AVR_NANO))
@@ -797,7 +714,7 @@ void DabbleClass::delay(unsigned long time)
           Dabble.processInput(DabbleSerial->read());
       }
 }
-DabbleClass Dabble;
+
 //Instantiating Object
 /*#if (defined(__AVR_ATmega32U4__) || \
      defined(ARDUINO_LINUX) || \
@@ -822,3 +739,4 @@ byte DabbleClass::getVerificationByte()
   randomValue = randomValue|(randomValueComplement<<4);
   return randomValue;
 }
+DabbleClass Dabble;

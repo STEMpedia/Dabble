@@ -17,7 +17,7 @@
    You can reduce the size of library compiled by enabling only those modules that you want
    to use. For this first define CUSTOM_SETTINGS followed by defining INCLUDE_modulename.
 
-   Explore more on: https://thestempedia.com/docs/dabble/
+   Explore more on: https://thestempedia.com/docs/dabble/camera-module-photos-videos/
 */
 #define CUSTOM_SETTINGS
 #define INCLUDE_CAMERA_MODULE
@@ -36,7 +36,6 @@ void loop() {
   if( a == '1')
   {
     Camera.setParameters(FRONT,OFF,HIGH_QUALITY,0);  //Direction , Flash, Quality, zoom(0-100%)
-    Camera.captureImage();
     Camera.startRecording();
   }
   if( a == '2')
@@ -68,7 +67,7 @@ void printMessage()
   Serial.println("Tasks executed on sending different numbers are as followed: ");
   Serial.println("1 - Take a high quality video from front camera with no flash and no zoom.");
   Serial.println("2 - Take a low quality video from rear camera with Auto flash");
-  Serial.println("3 - Take a 50% zoomed image from Rear camera with high quality"); 
+  Serial.println("3 - Take a 50% zoomed video from Rear camera with high quality"); 
   Serial.println("4 - Stop video recording");
 }
 

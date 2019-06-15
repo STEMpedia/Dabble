@@ -5,7 +5,7 @@
    want to use. For this first define CUSTOM_SETTINGS followed by defining
    INCLUDE_modulename.
 
-   Explore more on: https://thestempedia.com/docs/dabble/
+   Explore more on: https://thestempedia.com/docs/dabble/notification/
 */
 #define CUSTOM_SETTINGS
 #define INCLUDE_NOTIFICATION_MODULE

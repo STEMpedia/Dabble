@@ -6,7 +6,7 @@
 
    This code helps you in identifying basic colors namely red, blue, green, yellow and violet.
    The method present in the library allows you to differentiate only these 5 colors.
-   Explore more on: https://thestempedia.com/docs/dabble/
+   Explore more on: https://thestempedia.com/docs/dabble/camera-module-color-detector/
 */
 #define CUSTOM_SETTINGS
 #define INCLUDE_COLORDETECTOR_MODULE

@@ -12,4 +12,5 @@
  #include "DataLoggerModule.h"
  #include "NotifyAndSMSModule.h"
  #include "MusicModule.h"
+ #include "InternetModule.h"
  

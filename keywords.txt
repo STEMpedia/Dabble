@@ -109,6 +109,10 @@ setDataSpeed	KEYWORD2
 play	KEYWORD2
 addToQueue	KEYWORD2
 stop	KEYWORD2
+updateThingspeakChannel	KEYWORD2
+updateThingspeakChannel	KEYWORD2
+updateThingspeakField	KEYWORD2
+updateThingspeakField	KEYWORD2
 #######################################
 # Constants And Literals (LITERAL1)
 #######################################

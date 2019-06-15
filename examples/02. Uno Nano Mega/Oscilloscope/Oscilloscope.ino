@@ -1,3 +1,6 @@
+/*
+	Explore more: https://thestempedia.com/docs/dabble/oscilloscope-module/
+*/
 #include "OscilloscopeModule.h"
 void setup() {
   /*

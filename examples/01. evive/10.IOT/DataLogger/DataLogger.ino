@@ -5,7 +5,7 @@
    You can reduce the size of library compiled by enabling only those modules that you want to
    use.For this first define CUSTOM_SETTINGS followed by defining INCLUDE_modulename.
 
-   Explore more on: https://thestempedia.com/docs/dabble/
+   Explore more on: https://thestempedia.com/docs/dabble/iot-module-data-logger/
 */   
 #define CUSTOM_SETTINGS
 #define INCLUDE_DATALOGGER_MODULE
