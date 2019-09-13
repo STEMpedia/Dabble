@@ -27,7 +27,7 @@ void loop() {
 void print_Proximity_data()
 {
   Serial.print("Distance: ");
-  Serial.println(Sensor.getdata_Proximity(), 7);
+  Serial.println(Sensor.getProximityDistance(), 7);
   Serial.println();
 }
 

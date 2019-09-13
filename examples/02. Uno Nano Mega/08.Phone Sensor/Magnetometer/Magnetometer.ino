@@ -33,13 +33,13 @@ void loop() {
 void print_Magnetometer_data()
 {
   Serial.print("X_axis: ");
-  Serial.print(Sensor.getdata_Magnetometer_xaxis(), 7);
+  Serial.print(Sensor.getMagnetometerXaxis(), 7);
   Serial.print('\t');
   Serial.print("Y_axis: ");
-  Serial.print(Sensor.getdata_Magnetometer_yaxis(), 7);
+  Serial.print(Sensor.getMagnetometerYaxis(), 7);
   Serial.print('\t');
   Serial.print("Z_axis: ");
-  Serial.println(Sensor.getdata_Magnetometer_zaxis(), 7);
+  Serial.println(Sensor.getMagnetometerZaxis(), 7);
   Serial.println();
 }
 

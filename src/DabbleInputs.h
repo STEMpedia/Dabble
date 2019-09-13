@@ -22,6 +22,16 @@ public:
 	
 	bool getStatus_TactileSwitch1();
 	bool getStatus_TactileSwitch2();
+
+	uint16_t getPot1Value();
+	uint16_t getPot2Value();
+	
+	uint8_t getSlideSwitch1Value();
+	uint8_t getSlideSwitch2Value();
+	
+	bool getTactileSwitch1Value();
+	bool getTactileSwitch2Value();
+	
 	uint16_t getInputsData(uint8_t a);
 	
 	//PictoBlox

@@ -22,7 +22,6 @@ float SensorModule::getdata_Accelerometer_zaxis()
 return accelo_z;
 }
 
-
 float SensorModule::getdata_Gyroscope_xaxis()
 {
 return gyro_x;
@@ -37,7 +36,6 @@ float SensorModule::getdata_Gyroscope_zaxis()
 {
 return gyro_z;
 }
-
 
 float SensorModule::getdata_Magnetometer_xaxis()
 {
@@ -54,7 +52,6 @@ float SensorModule::getdata_Magnetometer_zaxis()
 return magneto_z;
 }
 
-
 float SensorModule::getdata_Proximity()
 {
 return proximity;
@@ -69,8 +66,6 @@ float SensorModule::getdata_Sound()
 {
 return sound_level;
 }
-
-
 
 float SensorModule::getdata_Temperature()
 {
@@ -91,6 +86,89 @@ float SensorModule::getdata_GPS_latitude()
 {
 return gps_latitude;
 }
+
+
+float SensorModule::getAccelerometerXaxis()
+{
+return accelo_x;
+}
+
+float SensorModule::getAccelerometerYaxis()
+{
+return accelo_y;
+}
+
+float SensorModule::getAccelerometerZaxis()
+{
+return accelo_z;
+}
+
+float SensorModule::getGyroscopeXaxis()
+{
+return gyro_x;
+}
+
+float SensorModule::getGyroscopeYaxis()
+{
+return gyro_y;
+}
+
+float SensorModule::getGyroscopeZaxis()
+{
+return gyro_z;
+}
+
+float SensorModule::getMagnetometerXaxis()
+{
+return magneto_x;
+}
+
+float SensorModule::getMagnetometerYaxis()
+{
+return magneto_y;
+}
+
+float SensorModule::getMagnetometerZaxis()
+{
+return magneto_z;
+}
+
+float SensorModule::getProximityDistance()
+{
+return proximity;
+}
+
+float SensorModule::getLightIntensity()
+{
+return light;
+}
+
+float SensorModule::getSoundDecibels()
+{
+return sound_level;
+}
+
+float SensorModule::getTemperature()
+{
+return temperature;
+}
+
+float SensorModule::getBarometerPressure()
+{
+return barometer;
+}
+
+float SensorModule::getGPSlongitude()
+{
+return gps_longitude;
+}
+
+float SensorModule::getGPSlatitude()
+{
+return gps_latitude;
+}
+
+
 
 float SensorModule::getSensorData(uint8_t a)
 {

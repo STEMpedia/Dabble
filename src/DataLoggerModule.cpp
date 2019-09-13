@@ -123,6 +123,11 @@ void DataLoggerModule::close()
 Dabble.sendModuleFrame(DATALOGGER_ID,0,CLOSEFILE,0);
 }
 
+void DataLoggerModule::stop()
+{
+Dabble.sendModuleFrame(DATALOGGER_ID,0,CLOSEFILE,0);
+}
+
 /*void DataLoggerModule::createFile(String FileName,int count,...)
 {
 columnNumber = count;

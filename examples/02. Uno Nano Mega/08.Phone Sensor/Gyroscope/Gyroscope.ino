@@ -36,13 +36,13 @@ void loop() {
 void print_Gyroscope_data()
 {
   Serial.print("X_axis: ");
-  Serial.print(Sensor.getdata_Gyroscope_xaxis(), 7);
+  Serial.print(Sensor.getGyroscopeXaxis(), 7);
   Serial.print('\t');
   Serial.print("Y_axis: ");
-  Serial.print(Sensor.getdata_Gyroscope_yaxis(), 7);
+  Serial.print(Sensor.getGyroscopeYaxis(), 7);
   Serial.print('\t');
   Serial.print("Z_axis: ");
-  Serial.println(Sensor.getdata_Gyroscope_zaxis(), 7);
+  Serial.println(Sensor.getGyroscopeZaxis(), 7);
   Serial.println();
 }
 

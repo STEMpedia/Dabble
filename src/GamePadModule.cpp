@@ -262,3 +262,13 @@ float GamePadModule::gety_axis()
 		return 0;
 	}
 }
+
+float GamePadModule::getXaxisData()
+{
+	return getx_axis();
+}
+
+float GamePadModule::getYaxisData()
+{
+	return getx_axis();
+}

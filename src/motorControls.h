@@ -17,6 +17,9 @@ class motorControls : public ModuleParent
 	motorControls(uint8_t pwm1, uint8_t dirm1_1, uint8_t dirm1_2, uint8_t pwm2, uint8_t dirm2_1, uint8_t dirm2_2);
 	uint8_t getangle_Servo1();
 	uint8_t getangle_Servo2();
+
+	uint8_t getServo1Angle();
+	uint8_t getServo2Angle();
 	//int   getpwm_Motor1();
 	//int   getpwm_Motor2();
 	void runMotor1();

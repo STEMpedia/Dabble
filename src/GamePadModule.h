@@ -51,6 +51,9 @@ public:
 	float getJoystickData(uint8_t b);
 	float getx_axis();
 	float gety_axis();
+	
+	float getXaxisData();
+	float getYaxisData();
 	//setOnChange for Users Function
 	/* void setOnButtonChange(void (*)(unsigned char , unsigned char ,
 									unsigned char , unsigned char ,

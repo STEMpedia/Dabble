@@ -39,6 +39,26 @@ class SensorModule: public ModuleParent
 	float getdata_Barometer();
 	float getdata_GPS_longitude();
 	float getdata_GPS_latitude();
+
+	float getAccelerometerXaxis();
+	float getAccelerometerYaxis();
+	float getAccelerometerZaxis();
+	float getGyroscopeXaxis();
+	float getGyroscopeYaxis();
+	float getGyroscopeZaxis();
+	float getMagnetometerXaxis();
+	float getMagnetometerYaxis();
+	float getMagnetometerZaxis();
+	float getProximityDistance();
+	float getLightIntensity();
+	float getSoundDecibels();
+	float getTemperature();
+	float getBarometerPressure();
+	float getGPSlongitude();
+	float getGPSlatitude();
+
+
+
 	float getSensorData(uint8_t a);
 	
 	void setDataSpeed(uint8_t a);

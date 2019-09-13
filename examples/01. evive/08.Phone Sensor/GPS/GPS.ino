@@ -26,11 +26,11 @@ void loop() {
 void print_GPS_data()
 {
   Serial.print("Longitude: ");
-  Serial.print(Sensor.getdata_GPS_longitude(), 7);
+  Serial.print(Sensor.getGPSlongitude(), 7);
   Serial.print('\t');
   Serial.print('\t');
   Serial.print("Latitude: ");
-  Serial.println(Sensor.getdata_GPS_latitude(), 7);
+  Serial.println(Sensor.getGPSlatitude(), 7);
   Serial.println();
 }
 

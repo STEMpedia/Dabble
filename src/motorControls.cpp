@@ -62,6 +62,16 @@ uint8_t motorControls::getangle_Servo2()
 	return angle_servo2;
 }
 
+uint8_t motorControls::getServo1Angle()
+{
+	return angle_servo1;
+}
+
+uint8_t motorControls::getServo2Angle()
+{
+	return angle_servo2;
+}
+
 /*int motorControls::getpwm_Motor1()
 {
 	return pwm_Motor1;

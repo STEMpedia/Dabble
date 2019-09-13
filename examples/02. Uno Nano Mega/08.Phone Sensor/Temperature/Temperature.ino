@@ -34,7 +34,7 @@ void loop() {
 void print_Temperature_data()
 {
   Serial.print("TEMPERATURE: ");
-  Serial.println(Sensor.getdata_Temperature(), 7);
+  Serial.println(Sensor.getTemperature(), 7);
   Serial.println();
 }
 

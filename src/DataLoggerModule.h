@@ -23,6 +23,7 @@ void sendSettings(void(*)(void));
 //void send(String,char);
 //void send(int,...);
 void close();
+void stop();
 
 //PictoBlox
 void fileConfig(uint8_t,String);
