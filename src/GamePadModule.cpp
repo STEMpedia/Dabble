@@ -270,5 +270,5 @@ float GamePadModule::getXaxisData()
 
 float GamePadModule::getYaxisData()
 {
-	return getx_axis();
+	return gety_axis();
 }
