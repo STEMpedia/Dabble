@@ -1,7 +1,8 @@
 # Dabble- One App for Sensing & Control
 Whether you’re a student, a teacher, or a hobbyist, Dabble is the perfect place for all your DIYing needs. It transforms your Smartphone into a virtual I/O device and lets you control hardware via Bluetooth, communicate with it, access sensors like accelerometer, GPS, proximity and other features of your Smartphone. It also provides you with dedicated projects compatible with Scratch and Arduino to help you learn by doing.
-Currently Dabble is avaiable for Android users(coming soon for iPhone users) and its is supported on Android version 5.0.0 and above. One can download the app from Google PlayStore with this link given below.
-[https://play.google.com/store/apps/details?id=io.dabbleapp]
+Currently Dabble is avaiable for Android users(coming soon for iPhone users) and its is supported on Android version 5.0.0 and above. One can download the app from Google PlayStore with this link given below:
+Android: https://play.google.com/store/apps/details?id=io.dabbleapp
+iOS: https://apps.apple.com/us/app/dabble-bluetooth-controller/id1472734455
 
 The app is designed to provide data of certain features of your smartphone to evive and microcontroller boards like Arduino Uno, Nano and Mega,it also allows you to control them by your Smartphone. The app communicates with these boards via bluetooth modules like HC-05, HC-06 and HM-10. This repository consists of library required on your board side for communication with app.
 Dabble consists of various modules that allows you to control your hardware and access various smartphone features. A brief description of each module is mentioned below:
